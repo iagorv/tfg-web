@@ -1,6 +1,7 @@
 package com.example.achievity.Service;
 
 
+import com.example.achievity.Model.DTOs.JuegoResumenDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,12 +17,12 @@ public class JuegoApiService {
         this.webClient = WebClient.create("http://localhost:8080");
     }
 
-    public List<String> obtenerNombresDeJuegos() {
+    public List<JuegoResumenDTO> obtenerResumenDeJuegos() {
         return webClient.get()
-                .uri("/api/juegos/nombres")
+                .uri("/api/juegos/resumen")
                 .retrieve()
-                .bodyToFlux(String.class)
+                .bodyToFlux(JuegoResumenDTO.class)
                 .collectList()
-                .block(); // ¡Ojo! Esto es síncrono, está bien para este caso simple.
+                .block();
     }
 }

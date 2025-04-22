@@ -6,7 +6,10 @@
 <body>
 <h1>Juegos Disponibles</h1>
 <ul>
-    <li th:each="juego : ${juegos}" th:text="${juego}"></li>
+    <li th:each="juego : ${juegos}">
+        <h3 th:text="${juego.nombre}"></h3>
+        <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Imagen del juego" width="200"/>
+    </li>
 </ul>
 </body>
 </html>

@@ -16,7 +16,7 @@ public class JuegosController {
 
     @GetMapping("/juegos")
     public String mostrarJuegos(Model model) {
-        model.addAttribute("juegos", juegoApiService.obtenerNombresDeJuegos());
+        model.addAttribute("juegos", juegoApiService.obtenerResumenDeJuegos());
         return "juegos"; // Renderiza juegos.html
     }
 }
