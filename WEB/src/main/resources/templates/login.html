@@ -9,6 +9,8 @@
 <body>
 <div class="login-container">
     <h2>Iniciar sesión</h2>
+    <p class="success-message" th:text="${success}" style="color: #6fe381; margin-top: 15px;"></p> <!-- Mensaje de éxito -->
+
     <form action="/login" method="post">
         <div class="input-group">
             <label for="email">Usuario</label>
@@ -22,7 +24,9 @@
         <p class="error-message" th:text="${error}" ></p>
         <button type="submit" class="login-btn">Iniciar sesión</button>
     </form>
-
+    <p style="margin-top: 15px; color: #eaeaea;">
+        ¿No tienes una cuenta? <a href="/registro" style="color: #6fe381;">Regístrate aquí</a>
+    </p>
 </div>
 </body>
 

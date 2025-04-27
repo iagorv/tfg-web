@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="/styles/login.css"> <!-- Reutilizamos el mismo CSS -->
+    <link rel="stylesheet" href="/styles/login.css">
 </head>
 <body>
 <div class="login-container">
@@ -25,6 +25,9 @@
         <p class="error-message" th:text="${error}" ></p>
         <button type="submit" class="login-btn">Registrarse</button>
     </form>
+    <p style="margin-top: 15px; color: #eaeaea;">
+        ¿Ya tienes una cuenta? <a href="/login" style="color: #6fe381;">Inicia sesión aquí</a>
+    </p>
 </div>
 </body>
 </html>
