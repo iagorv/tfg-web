@@ -16,7 +16,7 @@ public class UsuarioService {
         this.restTemplate = new RestTemplate();
     }
 
-    // Método para hacer login con la API externa
+
     public UsuarioDTO login(LoginDTO loginDTO) {
         String url = "http://localhost:8080/api/login";
 
@@ -28,15 +28,9 @@ public class UsuarioService {
         }
     }
 
-    public boolean registrar(RegistroDTO registroDTO) {
+    public void registrar(RegistroDTO registroDTO) {
         String url = "http://localhost:8080/api/registro";
-
-        try {
-            restTemplate.postForEntity(url, registroDTO, Void.class);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        restTemplate.postForEntity(url, registroDTO, Void.class);
     }
 
 
