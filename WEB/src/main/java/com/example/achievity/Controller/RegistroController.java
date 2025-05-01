@@ -24,6 +24,11 @@ public class RegistroController {
 
     @PostMapping("/registro")
     public String registrarUsuario(RegistroDTO registroDTO, Model model, RedirectAttributes redirectAttributes) {
+
+        if(!registroDTO.getPassword().equals(registroDTO.getConfirmPassword())) {
+            model.addAttribute("error", "Las contraseñas no coinciden.");
+            return "registro";
+        }
         boolean exito = usuarioService.registrar(registroDTO);
 
         if (exito) {
