@@ -112,3 +112,17 @@ button[type="submit"]:active {
 .toggle-password:hover {
     background-color: #b187f7;
 }
+
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #6fe381;
+    border-radius: 4px;
+    background-color: #2a2a40;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
