@@ -121,37 +121,111 @@ body {
     flex: 1;
     padding: 40px 20px;
     text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .welcome-message {
     margin-bottom: 30px;
 }
-
+.section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #eaeaea;
+    text-align: left;
+}
 .games-list ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    background-color: #0099e6;
-    padding: 20px;
-    border-radius: 8px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.games-list li {
+.game-item {
     background-color: #2a2a40;
-    padding: 15px;
+    padding: 10px;
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: box-shadow 0.2s ease, border 0.2s ease, transform 0.2s ease;
 }
 
-.games-list img {
+
+
+.game-item:hover {
+    border: 2px solid #9f6eed;
+    box-shadow: 0 0 10px #9f6eed;
+    transform: translateY(-4px);
+}
+
+.game-image {
     width: 100%;
+    height: auto;
     border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.game-name {
+    font-size: 14px;
+    color: #eaeaea;
     margin-top: 10px;
+}
+
+/* CENTRAR LOS JUEGOS EN LA ÚLTIMA FILA */
+.games-list ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .games-list ul {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .games-list ul {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .games-list ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+    .games-list ul {
+        grid-template-columns: 1fr;
+    }
+}
+.hidden-game {
+    display: none;
+}
+.ver-mas-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.ver-mas {
+    color: #9f6eed;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.ver-mas:hover {
+    color: #b187f7;
 }
 
 /* FOOTER */
 .main-footer {
     height: 40px;
-    background-color: #a3a3a3;
+    background-color: #2a2a40;
 }

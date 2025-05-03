@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+
   <title>Inicio</title>
   <link rel="stylesheet" href="/styles/index.css">
 </head>
@@ -20,7 +21,7 @@
       <div class="user-dropdown">
         <a href="#">Perfil</a>
         <a href="#">Actividad</a>
-        <a href="#">Logout</a>
+        <a href="#" onclick="window.location.href='/login'">Logout</a>
       </div>
     </div>
   </div>
@@ -28,16 +29,22 @@
 
 <main class="main-content">
   <h2 class="welcome-message">Mensaje bienvenida</h2>
-  <section class="games-list">
 
-    <ul>
-      <li th:each="juego : ${juegos}">
-        <h3 th:text="${juego.nombre}"></h3>
+  <h3 class="section-title">Juegos populares</h3>
+  <section class="games-list">
+    <ul id="gamesContainer">
+      <li th:each="juego, iterStat : ${juegos}"
+          th:classappend="${iterStat.index >= 5} ? 'hidden-game'"
+          class="game-item">
         <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
-             alt="Imagen del juego" width="200"/>
+             alt="Imagen del juego" class="game-image"/>
+        <h3 class="game-name" th:text="${juego.nombre}"></h3>
       </li>
     </ul>
 
+    <div class="ver-mas-container">
+      <span id="showMoreBtn" class="ver-mas">Ver más</span>
+    </div>
   </section>
 </main>
 
