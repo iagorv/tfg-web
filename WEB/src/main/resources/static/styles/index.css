@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.main-header {
+    background-color: #6e6e6e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo {
+    width: 60px;
+    height: 40px;
+    background-color: yellow;
+}
+
+.nav-links a {
+    margin: 0 10px;
+    color: #eaeaea;
+    text-decoration: none;
+}
+
+.user-menu {
+    width: 40px;
+    height: 40px;
+    background-color: #33cc55;
+    border-radius: 50%;
+}
+
+/* MAIN */
+.main-content {
+    flex: 1;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.welcome-message {
+    margin-bottom: 30px;
+}
+
+.games-list ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    background-color: #0099e6;
+    padding: 20px;
+    border-radius: 8px;
+    list-style: none;
+}
+
+.games-list li {
+    background-color: #2a2a40;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.games-list img {
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* FOOTER */
+.main-footer {
+    height: 40px;
+    background-color: #a3a3a3;
+}

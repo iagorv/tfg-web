@@ -17,6 +17,11 @@ public class JuegosController {
     @GetMapping("/juegos")
     public String mostrarJuegos(Model model) {
         model.addAttribute("juegos", juegoApiService.obtenerResumenDeJuegos());
-        return "juegos"; // Renderiza juegos.html
+        return "juegos";
+    }
+    @GetMapping("/index")
+    public String mostrarIndex(Model model) {
+        model.addAttribute("juegos", juegoApiService.obtenerResumenDeJuegos());
+        return "index";
     }
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+<header class="main-header">
+  <div class="logo"></div>
+  <nav class="nav-links">
+    <a href="#">Actividad</a>
+    <a href="#">Buscar</a>
+  </nav>
+  <div class="user-menu"></div>
+</header>
+
+<main class="main-content">
+  <h2 class="welcome-message">Mensaje bienvenida</h2>
+  <section class="games-list">
+
+    <ul>
+      <li th:each="juego : ${juegos}">
+        <h3 th:text="${juego.nombre}"></h3>
+        <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
+             alt="Imagen del juego" width="200"/>
+      </li>
+    </ul>
+
+  </section>
+</main>
+
+<footer class="main-footer"></footer>
+</body>
+</html>
