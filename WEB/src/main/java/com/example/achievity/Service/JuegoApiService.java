@@ -25,4 +25,12 @@ public class JuegoApiService {
                 .collectList()
                 .block();
     }
+    public List<JuegoResumenDTO> obtenerJuegosPopulares() {
+        return webClient.get()
+                .uri("/api/juegos/populares") // Cambiamos el endpoint aquí
+                .retrieve()
+                .bodyToFlux(JuegoResumenDTO.class)
+                .collectList()
+                .block();
+    }
 }

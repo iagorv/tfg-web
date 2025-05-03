@@ -21,7 +21,7 @@ public class JuegosController {
     }
     @GetMapping("/index")
     public String mostrarIndex(Model model) {
-        model.addAttribute("juegos", juegoApiService.obtenerResumenDeJuegos());
+        model.addAttribute("juegos", juegoApiService.obtenerJuegosPopulares());
         return "index";
     }
 }
