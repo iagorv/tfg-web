@@ -7,12 +7,23 @@
 </head>
 <body>
 <header class="main-header">
-  <div class="logo"></div>
-  <nav class="nav-links">
-    <a href="#">Actividad</a>
-    <a href="#">Buscar</a>
-  </nav>
-  <div class="user-menu"></div>
+  <div class="logo">
+    <img src="/img/logo.png" alt="Logo">
+  </div>
+
+  <div class="header-right">
+    <a href="#" class="actividad-link">Actividad</a>
+    <input type="text" class="search-bar" placeholder="Buscar juegos...">
+
+    <div class="user-menu">
+      <img src="/img/user.png" alt="User Icon">
+      <div class="user-dropdown">
+        <a href="#">Perfil</a>
+        <a href="#">Actividad</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <main class="main-content">
@@ -31,5 +42,9 @@
 </main>
 
 <footer class="main-footer"></footer>
+
+<script src="/js/index.js"></script>
+
 </body>
+
 </html>
