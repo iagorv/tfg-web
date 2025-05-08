@@ -21,14 +21,15 @@
       <div class="user-dropdown">
         <a href="#">Perfil</a>
         <a href="#">Actividad</a>
-        <a href="#" onclick="window.location.href='/login'">Logout</a>
+        <a href="/logout">Logout</a>
       </div>
     </div>
   </div>
 </header>
 
 <main class="main-content">
-  <h2 class="welcome-message">Mensaje bienvenida</h2>
+  <h2 class="welcome-message">¡Hola, <span th:text="${session.nombreUsuario}">Usuario</span>!</h2>
+
 
   <h3 class="section-title">Juegos populares</h3>
   <section class="games-list">

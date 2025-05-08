@@ -1,6 +1,7 @@
 package com.example.achievity.Controller;
 
 
+import com.example.achievity.Authentication.SessionManager;
 import com.example.achievity.Model.DTOs.LoginDTO;
 import com.example.achievity.Model.DTOs.UsuarioDTO;
 import com.example.achievity.Service.UsuarioService;
@@ -15,11 +16,13 @@ public class LoginController {
 
 
     private final UsuarioService usuarioService;
+    private final SessionManager sessionManager;
 
-    public LoginController(UsuarioService usuarioService) {
+
+    public LoginController(UsuarioService usuarioService, SessionManager sessionManager) {
         this.usuarioService = usuarioService;
+        this.sessionManager = sessionManager;
     }
-
 
     @GetMapping("/login")
     public String mostrarLogin() {
@@ -31,10 +34,16 @@ public class LoginController {
         UsuarioDTO usuario = usuarioService.login(loginDTO);
 
         if (usuario != null) {
+            sessionManager.login(usuario.getId(), usuario.getNombre());
             return "redirect:/index";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "login";
         }
+    }
+    @GetMapping("/logout")
+    public String logout() {
+        sessionManager.logout();
+        return "redirect:/login";
     }
 }
