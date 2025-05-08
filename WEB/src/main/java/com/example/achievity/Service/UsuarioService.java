@@ -10,28 +10,30 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 @Service
 public class UsuarioService {
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    public UsuarioService() {
-        this.restTemplate = new RestTemplate();
+    public UsuarioService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
 
-
     public UsuarioDTO login(LoginDTO loginDTO) {
-        String url = "http://localhost:8080/api/login";
-
-        try {
-            return restTemplate.postForObject(url, loginDTO, UsuarioDTO.class);
-        } catch (Exception e) {
-
-            return null;
-        }
+        return webClient.post()
+                .uri("/api/login")
+                .bodyValue(loginDTO)
+                .retrieve()
+                .bodyToMono(UsuarioDTO.class)
+                .block();
     }
 
     public void registrar(RegistroDTO registroDTO) {
-        String url = "http://localhost:8080/api/registro";
-        restTemplate.postForEntity(url, registroDTO, Void.class);
+        webClient.post()                   // metodo POST para enviar datos, es los juegos tengo get
+                .uri("/api/registro")       // URL del endpoint
+                .bodyValue(registroDTO)     // lo que le envías a la api
+                .retrieve()                 // queremos recibir una respuesta
+                .toBodilessEntity()         // no necesitamos un objeto ni nada de la respuesta, solo si se completó bien
+                .block();                   //para hacerlo sincronico
     }
+
 
 
 }

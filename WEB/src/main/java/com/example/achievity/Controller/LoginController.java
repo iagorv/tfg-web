@@ -31,7 +31,7 @@ public class LoginController {
         UsuarioDTO usuario = usuarioService.login(loginDTO);
 
         if (usuario != null) {
-            return "redirect:/juegos";
+            return "redirect:/index";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "login";
