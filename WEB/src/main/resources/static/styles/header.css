@@ -1,0 +1,102 @@
+
+/* HEADER *//* HEADER GENERAL */
+.main-header {
+    background-color: #2a2a40;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* LOGO */
+.logo img {
+    height: 40px;
+}
+
+/* DERECHA DEL HEADER */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ENLACE ACTIVIDAD */
+.actividad-link {
+    color: #eaeaea;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* SEARCH BAR */
+.search-bar {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+
+
+.nav-links a {
+    margin: 0 10px;
+    color: #eaeaea;
+    text-decoration: none;
+}
+
+.user-menu {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #9f6eed;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.user-menu:hover {
+    background-color: #b187f7;
+}
+
+.user-menu img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Dropdown */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #2a2a40;
+    border: 1px solid #9f6eed;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    min-width: 120px;
+    text-align: left;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 10px;
+    color: #eaeaea;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.user-dropdown a:hover {
+    background-color: #9f6eed;
+}
+
+/* Mostrar dropdown al click */
+.user-menu.active .user-dropdown {
+    display: block;
+}

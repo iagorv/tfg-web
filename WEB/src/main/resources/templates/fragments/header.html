@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="main-header" th:fragment="headerFragment">
+  <head>
+    <link rel="stylesheet" href="/styles/header.css">
+    <script src="/js/header.js"></script>
+
+  </head>
+  <div class="logo">
+    <img src="/img/logo.png" alt="Logo">
+  </div>
+
+  <div class="header-right">
+    <a href="#" class="actividad-link">Actividad</a>
+    <input type="text" class="search-bar" placeholder="Buscar juegos...">
+
+    <div class="user-menu">
+      <img src="/img/user.png" alt="User Icon">
+      <div class="user-dropdown">
+        <a href="/perfil">Perfil</a>
+        <a href="#">Actividad</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+</body>
+</html>
+
