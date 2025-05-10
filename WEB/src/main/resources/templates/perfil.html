@@ -36,24 +36,36 @@
 
 
       <div class="recent-reviews">
-        <h4>Últimas reviews</h4>
-        <div id="reviews-container">
-          <div th:each="review : ${ultimasReviews}" class="review">
-            <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}"
-                 alt="Imagen del juego" class="game-image"/>
+      <h4>Últimas reviews</h4>
+      <div id="reviews-container">
+        <div th:each="review : ${ultimasReviews}" class="review">
+          <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}"
+               alt="Imagen del juego" class="game-image"/>
 
-            <div class="review-content">
-              <div class="review-header">
-                <strong th:text="${review.tituloJuego}">Nombre del Juego</strong>
-                <span class="review-rating"
-                      th:text="${'⭐'.repeat(review.nota)}"></span>
-                <span class="review-score" th:text="${review.nota}"></span>
+          <div class="review-content">
+            <div class="review-header">
+              <strong th:text="${review.tituloJuego}">Nombre del Juego</strong>
+
+              <!-- Estrellas -->
+              <div class="review-rating">
+                <span class="star" data-index="1"></span>
+                <span class="star" data-index="2"></span>
+                <span class="star" data-index="3"></span>
+                <span class="star" data-index="4"></span>
+                <span class="star" data-index="5"></span>
+
+
+
               </div>
-              <p th:text="${review.reseña}"></p>
+
+              <span class="review-score" th:text="${review.nota}"></span>
             </div>
+            <p th:text="${review.reseña}"></p>
           </div>
         </div>
       </div>
+    </div>
+
 
     </div>
   </main>
@@ -61,5 +73,22 @@
 
 <footer class="main-footer">
 </footer>
+<script>
+  document.querySelectorAll('.review').forEach(review => {
+    const rating = parseFloat(review.querySelector('.review-score').innerText);
+    const stars = review.querySelectorAll('.star');
+
+    stars.forEach((star, index) => {
+      const position = (index + 1) * 2;
+      star.classList.remove('full', 'half');
+
+      if (rating >= position) {
+        star.classList.add('full');
+      } else if (rating >= position - 1) {
+        star.classList.add('half');
+      }
+    });
+  });
+</script>
 </body>
 </html>

@@ -1,16 +1,17 @@
 package com.example.achievity.Model.DTOs;
 
+
 import java.time.Instant;
 
 public class ReviewDTO {
     private Long id;
     private String tituloJuego;
     private String reseña;
-    private Integer nota;
+    private Double nota;
     private Long juegoId;
     private Instant fechaReview;
 
-    public ReviewDTO(Long id, String tituloJuego, String reseña, Integer nota, Long juegoId, Instant fechaReview) {
+    public ReviewDTO(Long id, String tituloJuego, String reseña, Double nota, Long juegoId, Instant fechaReview) {
         this.id = id;
         this.tituloJuego = tituloJuego;
         this.reseña = reseña;
@@ -43,11 +44,11 @@ public class ReviewDTO {
         this.reseña = reseña;
     }
 
-    public Integer getNota() {
+    public Double getNota() {
         return nota;
     }
 
-    public void setNota(Integer nota) {
+    public void setNota(Double nota) {
         this.nota = nota;
     }
 
