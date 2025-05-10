@@ -28,7 +28,7 @@ public class UsuarioService {
 
     public void registrar(RegistroDTO registroDTO) {
         webClient.post()                   // metodo POST para enviar datos, es los juegos tengo get
-                .uri("/api/registro")       // URL del endpoint
+                .uri("/api/user/registro")       // URL del endpoint
                 .bodyValue(registroDTO)     // lo que le envías a la api
                 .retrieve()                 // queremos recibir una respuesta
                 .toBodilessEntity()         // no necesitamos un objeto ni nada de la respuesta, solo si se completó bien
