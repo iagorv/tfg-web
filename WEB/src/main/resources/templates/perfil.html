@@ -37,52 +37,24 @@
 
       <div class="recent-reviews">
         <h4>Últimas reviews</h4>
+        <div id="reviews-container">
+          <div th:each="review : ${ultimasReviews}" class="review">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}"
+                 alt="Imagen del juego" class="game-image"/>
 
-
-        <div class="review">
-          <img th:src="@{'http://localhost:8080/img/games/6.png'}"
-               alt="Imagen del juego" class="game-image"/>
-
-          <div class="review-content">
-            <div class="review-header">
-              <strong>The Last of Us</strong>
-              <span class="review-rating">⭐⭐⭐⭐⭐</span>
-              <span class="review-score">9.5</span>
+            <div class="review-content">
+              <div class="review-header">
+                <strong th:text="${review.tituloJuego}">Nombre del Juego</strong>
+                <span class="review-rating"
+                      th:text="${'⭐'.repeat(review.nota)}"></span>
+                <span class="review-score" th:text="${review.nota}"></span>
+              </div>
+              <p th:text="${review.reseña}"></p>
             </div>
-            <p>Increíble historia.</p>
           </div>
         </div>
-
-        <div class="review">
-          <img th:src="@{'http://localhost:8080/img/games/13.png'}"
-               alt="Imagen del juego" class="game-image"/>
-
-          <div class="review-content">
-            <div class="review-header">
-              <strong>Hollow Knight</strong>
-              <span class="review-rating">⭐⭐⭐⭐☆</span>
-              <span class="review-score">8.7</span>
-            </div>
-            <p>Atmosférico y desafiante, una joya.</p>
-          </div>
-        </div>
-
-        <div class="review">
-
-          <img th:src="@{'http://localhost:8080/img/games/16.png'}"
-               alt="Imagen del juego" class="game-image"/>
-
-          <div class="review-content">
-            <div class="review-header">
-              <strong>Crash Bandicoot N. Sane Trilogy</strong>
-              <span class="review-rating">⭐⭐⭐☆☆</span>
-              <span class="review-score">7.3</span>
-            </div>
-            <p>Juegazo!</p>
-          </div>
-        </div>
-
       </div>
+
     </div>
   </main>
 </div>
