@@ -89,3 +89,6 @@ body {
     background-color: #b187f7;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

@@ -3,6 +3,7 @@ package com.example.achievity.Service;
 import com.example.achievity.Model.DTOs.LoginDTO;
 import com.example.achievity.Model.DTOs.RegistroDTO;
 import com.example.achievity.Model.DTOs.UsuarioDTO;
+import com.example.achievity.Model.DTOs.UsuarioInfoDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -32,6 +33,14 @@ public class UsuarioService {
                 .retrieve()                 // queremos recibir una respuesta
                 .toBodilessEntity()         // no necesitamos un objeto ni nada de la respuesta, solo si se completó bien
                 .block();                   //para hacerlo sincronico
+    }
+
+    public UsuarioInfoDTO obtenerInfoUsuario(Long id) {
+        return webClient.get()
+                .uri("/api/user/" + id)
+                .retrieve()
+                .bodyToMono(UsuarioInfoDTO.class)
+                .block();
     }
 
 

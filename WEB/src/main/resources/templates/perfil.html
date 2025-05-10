@@ -9,29 +9,31 @@
 <div th:replace="fragments/header :: headerFragment"></div>
 
 <div class="profile-content">
-<main class="profile-container">
-  <div class="profile-sidebar">
-    <img src="/img/user.png" alt="Avatar" class="profile-avatar">
-    <h3 class="username" th:text="${session.nombreUsuario}">Usuario</h3>
-    <p class="email">usuario@ejemplo.com</p>
-    <p class="fecha-alta">Miembro desde: 01/05/2022</p>
-  </div>
+  <main class="profile-container">
+    <div class="profile-sidebar">
+      <img src="/img/user.png" alt="Avatar" class="profile-avatar">
+      <h3 class="username" th:text="${usuario.nombre}">Usuario</h3>
+      <p class="email" th:text="${usuario.email}">usuario@ejemplo.com</p>
+      <p class="fecha-alta" th:text="${#temporals.format(usuario.fechaAlta, 'dd/MM/yyyy')}">
+        Miembro desde: 01/05/2022
+      </p>
+      <p class="premium-status" th:text="${usuario.premium ? 'Cuenta Premium' : 'Cuenta Básica'}"></p>
+    </div>
 
-  <div class="profile-form-section">
-    <form class="profile-form">
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" value="Juan Pérez">
+    <div class="profile-form-section">
+      <form class="profile-form">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" th:value="${usuario.nombre}">
 
-      <label for="fechaNacimiento">Fecha de Nacimiento</label>
-      <input type="date" id="fechaNacimiento" value="1995-05-01">
+        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+        <input type="date" id="fechaNacimiento" th:value="${usuario.fechaNacimiento}">
 
-      <button type="submit">Guardar cambios</button>
-    </form>
-  </div>
-</main>
+        <button type="submit">Guardar cambios</button>
+      </form>
+    </div>
+  </main>
 </div>
 <footer class="main-footer">
 </footer>
 </body>
 </html>
-
