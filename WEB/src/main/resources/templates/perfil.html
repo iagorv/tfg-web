@@ -24,15 +24,22 @@
 
     <!-- Contenido principal -->
     <div class="profile-form-section">
-      <form class="profile-form">
+      <form class="profile-form" th:action="@{/perfil/actualizar}" method="post">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" th:value="${usuario.nombre}">
+        <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
 
         <label for="fechaNacimiento">Fecha de Nacimiento</label>
-        <input type="date" id="fechaNacimiento" th:value="${usuario.fechaNacimiento}">
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" th:value="${usuario.fechaNacimiento}" required>
 
         <button type="submit">Guardar cambios</button>
       </form>
+      <div th:if="${mensaje}" class="alert alert-success">
+        <p th:text="${mensaje}"></p>
+      </div>
+
+      <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+      </div>
 
 
       <div class="recent-reviews">

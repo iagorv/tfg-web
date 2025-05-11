@@ -1,9 +1,6 @@
 package com.example.achievity.Service;
 
-import com.example.achievity.Model.DTOs.LoginDTO;
-import com.example.achievity.Model.DTOs.RegistroDTO;
-import com.example.achievity.Model.DTOs.UsuarioDTO;
-import com.example.achievity.Model.DTOs.UsuarioInfoDTO;
+import com.example.achievity.Model.DTOs.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -40,6 +37,14 @@ public class UsuarioService {
                 .uri("/api/user/" + id)
                 .retrieve()
                 .bodyToMono(UsuarioInfoDTO.class)
+                .block();
+    }
+    public void actualizarUsuario(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
+        webClient.put()
+                .uri("/api/user/" + id)
+                .bodyValue(usuarioUpdateDTO)
+                .retrieve()
+                .toBodilessEntity()
                 .block();
     }
 
