@@ -186,3 +186,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -webkit-text-fill-color: transparent;
     line-height: 28px;
 }
+
+.premium-user {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ffea6c;
+    font-size: 18px;
+    position: relative;
+    text-shadow:
+            0 0 5px rgba(255, 215, 0, 0.5),
+            0 0 10px rgba(255, 215, 0, 0.3),
+            0 0 15px rgba(255, 215, 0, 0.2);
+    animation: glowing 1.5s infinite alternate;
+}
+
+@keyframes glowing {
+    0% {
+        text-shadow:
+                0 0 5px rgba(255, 215, 0, 0.5),
+                0 0 10px rgba(255, 215, 0, 0.3),
+                0 0 15px rgba(255, 215, 0, 0.2);
+    }
+    100% {
+        text-shadow:
+                0 0 6px rgba(255, 215, 0, 0.8),
+                0 0 12px rgba(255, 215, 0, 0.6),
+                0 0 17px rgba(255, 215, 0, 0.4);
+    }
+}
