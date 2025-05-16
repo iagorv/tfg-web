@@ -10,6 +10,15 @@ public class RegistroDTO {
 
     private LocalDate fechaNacimiento;
 
+
+    public RegistroDTO(String nombre, String email, String password, String confirmPassword, LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -49,4 +58,7 @@ public class RegistroDTO {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+
+
 }
