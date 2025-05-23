@@ -8,6 +8,23 @@
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
 
+<div id="background" class="background-image"></div>
+<script th:inline="javascript">
+  const juegoId = [[${juego.id}]];
+  const bannerUrl = `http://localhost:8080/img/banners/${juegoId}.png`;
+  const portadaUrl = `http://localhost:8080/img/games/${juegoId}.png`;
+
+  const img = new Image();
+  img.src = bannerUrl;
+  img.onload = () => {
+    document.getElementById('background').style.backgroundImage = `url('${bannerUrl}')`;
+  };
+  img.onerror = () => {
+    document.getElementById('background').style.backgroundImage = `url('${portadaUrl}')`;
+  };
+</script>
+
+<div class="review-wrapper">
 <div class="review-card">
   <h2 th:text="'Reseñar: ' + ${juego.nombre}">Añadir Reseña</h2>
 
@@ -32,7 +49,7 @@
     <button class="submit-button" type="submit">Enviar Reseña</button>
   </form>
 </div>
-
+</div>
 <script src="/js/review.js" type="module"></script>
 </body>
 </html>
