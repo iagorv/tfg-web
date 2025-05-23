@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${juego.nombre}">Reseña del Juego</title>
+  <link rel="stylesheet" href="/styles/review.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<div class="review-card">
+  <h2 th:text="'Reseñar: ' + ${juego.nombre}">Añadir Reseña</h2>
+
+  <div class="rating">
+    <span class="star" data-index="1"></span>
+    <span class="star" data-index="2"></span>
+    <span class="star" data-index="3"></span>
+    <span class="star" data-index="4"></span>
+    <span class="star" data-index="5"></span>
+  </div>
+
+  <div class="rating-control">
+    <button id="decrease">⬇</button>
+    <p class="rating-text">Calificación: 0</p>
+    <button id="increase">⬆</button>
+  </div>
+
+  <form method="post" th:action="@{/reviews}">
+    <input type="hidden" name="idJuego" th:value="${juego.id}"/>
+    <input type="hidden" name="rating" id="rating-input" value="0"/>
+    <textarea name="contenido" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
+    <button class="submit-button" type="submit">Enviar Reseña</button>
+  </form>
+</div>
+
+<script src="/js/review.js" type="module"></script>
+</body>
+</html>

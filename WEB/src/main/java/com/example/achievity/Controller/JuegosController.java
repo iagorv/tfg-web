@@ -5,6 +5,7 @@ import com.example.achievity.Service.JuegoApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class JuegosController {
@@ -31,4 +32,17 @@ public class JuegosController {
         model.addAttribute("juegos", juegoApiService.obtenerJuegosPopulares());
         return "index";
     }
+    @GetMapping("/juegos/{idJuego}/review")
+    public String mostrarFormularioReview(@PathVariable Long idJuego, Model model) {
+        var juegoNombre = juegoApiService.obtenerNombreJuegoPorId(idJuego);
+
+        if (juegoNombre == null) {
+            return "redirect:/index";
+        }
+
+        model.addAttribute("juego", juegoNombre);
+        return "review";
+    }
+
+
 }

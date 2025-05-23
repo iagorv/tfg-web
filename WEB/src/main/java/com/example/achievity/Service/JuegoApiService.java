@@ -1,9 +1,12 @@
 package com.example.achievity.Service;
 
 
+import com.example.achievity.Model.DTOs.JuegoNombreDTO;
 import com.example.achievity.Model.DTOs.JuegoResumenDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 
@@ -32,5 +35,16 @@ public class JuegoApiService {
                 .bodyToFlux(JuegoResumenDTO.class)
                 .collectList()
                 .block();
+    }
+    public JuegoNombreDTO obtenerNombreJuegoPorId(Long id) {
+        try {
+            return webClient.get()
+                    .uri("/api/juegos/{id}/nombre", id)
+                    .retrieve()
+                    .bodyToMono(JuegoNombreDTO.class)
+                    .block();
+        } catch (WebClientResponseException.NotFound e) {
+            return null;
+        }
     }
 }
