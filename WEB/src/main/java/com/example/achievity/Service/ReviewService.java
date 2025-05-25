@@ -1,6 +1,7 @@
 package com.example.achievity.Service;
 
 
+import com.example.achievity.Model.DTOs.ReviewCrearDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,6 +25,15 @@ public class ReviewService {
                 .retrieve()
                 .bodyToFlux(ReviewDTO.class)
                 .collectList()
+                .block();
+    }
+
+    public void enviarReview(ReviewCrearDTO reviewDTO) {
+        webClient.post()
+                .uri("/api/review/add")
+                .bodyValue(reviewDTO)
+                .retrieve()
+                .toBodilessEntity()
                 .block();
     }
 

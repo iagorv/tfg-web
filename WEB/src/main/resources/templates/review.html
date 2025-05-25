@@ -43,10 +43,14 @@
   </div>
 
   <form method="post" th:action="@{/reviews}">
-    <input type="hidden" name="idJuego" th:value="${juego.id}"/>
-    <input type="hidden" name="rating" id="rating-input" value="0"/>
-    <textarea name="contenido" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
+    <input type="hidden" name="juegoId" th:value="${juego.id}"/>
+    <input type="hidden" name="nota" id="rating-input" value="0"/>
+    <textarea name="reseña" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
     <button class="submit-button" type="submit">Enviar Reseña</button>
+
+
+
+
   </form>
 </div>
 </div>
