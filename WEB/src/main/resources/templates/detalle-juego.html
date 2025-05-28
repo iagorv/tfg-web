@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${juego.nombre}">Detalle del Juego</title>
+    <link rel="stylesheet" href="/styles/detalle-juego.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<!-- Banner superior -->
+<div class="banner" th:style="'background-image: url(http://localhost:8080/img/banners/' + ${juego.id} + '.png)'"></div>
+
+<main class="detalle-container">
+    <!-- Poster -->
+    <div class="poster">
+        <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego">
+    </div>
+
+    <!-- Info -->
+    <div class="info-juego">
+        <h1 class="titulo" th:text="${juego.nombre}">Nombre del juego</h1>
+        <p><strong>Desarrollador:</strong> <span th:text="${juego.desarrollador}"></span></p>
+        <p><strong>Año de salida:</strong> <span th:text="${juego.añoSalida}"></span></p>
+        <p><strong>Géneros:</strong> <span th:text="${#strings.listJoin(juego.generos, ', ')}"></span></p>
+        <p><strong>Plataformas:</strong> <span th:text="${#strings.listJoin(juego.plataformas, ', ')}"></span></p>
+        <p class="descripcion" th:text="${juego.descripcion}"></p>
+    </div>
+</main>
+
+<footer class="main-footer"></footer>
+</body>
+</html>

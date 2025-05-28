@@ -1,0 +1,88 @@
+/* RESET Y BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-footer {
+    height: 40px;
+    background-color: #2a2a40;
+}
+
+/* BANNER SUPERIOR */
+.banner {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+}
+
+/* CONTENIDO DETALLE */
+.detalle-container {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0 40px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* POSTER */
+.poster img {
+    width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: #2a2a40;
+    padding: 8px;
+}
+
+/* INFORMACIÓN DEL JUEGO */
+.info-juego {
+    flex: 1;
+    max-width: 600px;
+}
+
+.info-juego .titulo {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #9f6eed;
+}
+
+.info-juego p {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.descripcion {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #cccccc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+    .detalle-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .poster img {
+        width: 80%;
+    }
+
+    .info-juego {
+        text-align: center;
+    }
+}

@@ -1,6 +1,7 @@
 package com.example.achievity.Controller;
 
 import com.example.achievity.Authentication.SessionManager;
+import com.example.achievity.Model.DTOs.JuegoDetalleDTO;
 import com.example.achievity.Service.JuegoApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +47,22 @@ public class JuegosController {
         model.addAttribute("juego", juegoNombre);
         return "review";
     }
+
+    @GetMapping("/juegos/{id}")
+    public String detalleJuego(@PathVariable Long id, Model model) {
+        JuegoDetalleDTO juego = juegoApiService.obtenerJuegoPorId(id);
+        if (!sessionManager.estaLogeado()) {
+            return "redirect:/login";
+        }
+        if (juego == null) {
+            return "redirect:/index"; // o una vista de error
+        }
+
+        model.addAttribute("juego", juego);
+        return "detalle-juego";
+    }
+
+
 
 
 }
