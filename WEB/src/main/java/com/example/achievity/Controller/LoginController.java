@@ -34,7 +34,8 @@ public class LoginController {
         UsuarioDTO usuario = usuarioService.login(loginDTO);
 
         if (usuario != null) {
-            sessionManager.login(usuario.getId(), usuario.getNombre());
+            sessionManager.login(usuario.getId(), usuario.getNombre(), usuario.isEsPremium());
+
             return "redirect:/index";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");

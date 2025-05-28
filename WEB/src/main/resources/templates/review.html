@@ -45,7 +45,11 @@
   <form method="post" th:action="@{/reviews}">
     <input type="hidden" name="juegoId" th:value="${juego.id}"/>
     <input type="hidden" name="nota" id="rating-input" value="0"/>
-    <textarea name="reseña" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
+    <textarea id="review-text" name="reseña" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
+
+    <p id="char-warning" class="char-warning" style="display:none; color: #ff5c5c; font-size: 0.9em; margin-top: 4px;">
+      Has superado el máximo de 300 caracteres.
+    </p>
     <button class="submit-button" type="submit">Enviar Reseña</button>
 
 
@@ -55,5 +59,39 @@
 </div>
 </div>
 <script src="/js/review.js" type="module"></script>
+<script>
+  const reviewTextarea = document.getElementById('review-text');
+  const charWarning = document.getElementById('char-warning');
+  const form = document.querySelector('form');
+  const esPremium = [[${session.esPremium}]];
+  const maxChars = esPremium ? 800 : 300;
+
+  reviewTextarea.addEventListener('input', () => {
+    const textLength = reviewTextarea.value.length;
+
+    if (textLength > maxChars) {
+      reviewTextarea.style.borderColor = '#ff5c5c';
+      reviewTextarea.style.color = '#ff5c5c';
+      charWarning.style.display = 'block';
+      charWarning.textContent = `Has superado el máximo de ${maxChars} caracteres.`;
+    } else {
+      reviewTextarea.style.borderColor = '';
+      reviewTextarea.style.color = '';
+      charWarning.style.display = 'none';
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    const textLength = reviewTextarea.value.length;
+    if (textLength > maxChars) {
+      e.preventDefault();
+      charWarning.style.display = 'block';
+      charWarning.textContent = `Has superado el máximo de ${maxChars} caracteres.`;
+      reviewTextarea.style.borderColor = '#ff5c5c';
+      reviewTextarea.style.color = '#ff5c5c';
+    }
+  });
+</script>
+
 </body>
 </html>

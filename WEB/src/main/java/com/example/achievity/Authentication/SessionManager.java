@@ -17,10 +17,13 @@ public class SessionManager {
     }
 
 
-    public void login(Long idUsuario, String nombreUsuario) {
+    public void login(Long idUsuario, String nombreUsuario, boolean esPremium) {
         session.setAttribute("idUsuarioLogeado", idUsuario);
         session.setAttribute("nombreUsuario", nombreUsuario);
+        session.setAttribute("esPremium", esPremium);
     }
+
+
 
 
     public Long getIdUsuarioLogeado() {
@@ -38,6 +41,10 @@ public class SessionManager {
 
     public boolean estaLogeado() {
         return session.getAttribute("idUsuarioLogeado") != null;
+    }
+    public boolean isPremium() {
+        Boolean premium = (Boolean) session.getAttribute("esPremium");
+        return premium != null && premium;
     }
 }
 

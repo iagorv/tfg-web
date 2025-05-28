@@ -34,6 +34,9 @@ public class JuegosController {
     }
     @GetMapping("/juegos/{idJuego}/review")
     public String mostrarFormularioReview(@PathVariable Long idJuego, Model model) {
+        if (!sessionManager.estaLogeado()) {
+            return "redirect:/login";
+        }
         var juegoNombre = juegoApiService.obtenerNombreJuegoPorId(idJuego);
 
         if (juegoNombre == null) {
