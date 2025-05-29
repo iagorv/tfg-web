@@ -2,21 +2,28 @@ package com.example.achievity.Controller;
 
 import com.example.achievity.Authentication.SessionManager;
 import com.example.achievity.Model.DTOs.JuegoDetalleDTO;
+import com.example.achievity.Model.DTOs.ReviewConUsuarioDTO;
+import com.example.achievity.Model.DTOs.ReviewDTO;
 import com.example.achievity.Service.JuegoApiService;
+import com.example.achievity.Service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Controller
 public class JuegosController {
 
     private final JuegoApiService juegoApiService;
     private final SessionManager sessionManager;
+    private final ReviewService reviewService;
 
-    public JuegosController(JuegoApiService juegoApiService, SessionManager sessionManager) {
+    public JuegosController(JuegoApiService juegoApiService, SessionManager sessionManager, ReviewService reviewService) {
         this.juegoApiService = juegoApiService;
         this.sessionManager = sessionManager;
+        this.reviewService = reviewService;
     }
     @GetMapping("/juegos")
     public String mostrarJuegos(Model model) {
@@ -51,16 +58,24 @@ public class JuegosController {
     @GetMapping("/juegos/{id}")
     public String detalleJuego(@PathVariable Long id, Model model) {
         JuegoDetalleDTO juego = juegoApiService.obtenerJuegoPorId(id);
+
         if (!sessionManager.estaLogeado()) {
             return "redirect:/login";
         }
+
         if (juego == null) {
-            return "redirect:/index"; // o una vista de error
+            return "redirect:/index";
         }
 
+        List<ReviewConUsuarioDTO> reviews = reviewService.obtenerReviewsPorJuego(id);
+
         model.addAttribute("juego", juego);
+        model.addAttribute("reviews", reviews);
+
         return "detalle-juego";
     }
+
+
 
 
 

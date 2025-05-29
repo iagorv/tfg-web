@@ -10,23 +10,72 @@
 
 <!-- Banner superior -->
 <div class="banner" th:style="'background-image: url(http://localhost:8080/img/banners/' + ${juego.id} + '.png)'"></div>
-
 <main class="detalle-container">
-    <!-- Poster -->
-    <div class="poster">
-        <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego">
+    <!-- Poster + Info principal -->
+    <div class="detalle-top">
+        <!-- Poster -->
+        <div class="poster">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego">
+        </div>
+
+        <!-- Info -->
+        <div class="info-juego">
+            <h1 class="titulo" th:text="${juego.nombre}">Nombre del juego</h1>
+            <p class="subtitulo" th:text="${juego.desarrollador}">Desarrollador</p>
+
+            <p><strong>Año de salida:</strong> <span th:text="${juego.añoSalida}"></span></p>
+            <p><strong>Géneros:</strong> <span th:text="${#strings.listJoin(juego.generos, ', ')}"></span></p>
+            <p><strong>Plataformas:</strong> <span th:text="${#strings.listJoin(juego.plataformas, ', ')}"></span></p>
+            <p class="descripcion" th:text="${juego.descripcion}"></p>
+
+            <!-- Acciones -->
+            <div class="acciones-juego">
+                <a th:href="@{'/juegos/' + ${juego.id} + '/review'}" class="btn">Escribir reseña</a>
+
+                <button class="btn btn-secundario">Añadir a deseados</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Info -->
-    <div class="info-juego">
-        <h1 class="titulo" th:text="${juego.nombre}">Nombre del juego</h1>
-        <p><strong>Desarrollador:</strong> <span th:text="${juego.desarrollador}"></span></p>
-        <p><strong>Año de salida:</strong> <span th:text="${juego.añoSalida}"></span></p>
-        <p><strong>Géneros:</strong> <span th:text="${#strings.listJoin(juego.generos, ', ')}"></span></p>
-        <p><strong>Plataformas:</strong> <span th:text="${#strings.listJoin(juego.plataformas, ', ')}"></span></p>
-        <p class="descripcion" th:text="${juego.descripcion}"></p>
-    </div>
+    <!-- Nota media (gráfica) -->
+    <section class="rating-section">
+        <h2>Nota media</h2>
+        <div class="grafica-placeholder">
+            <!-- Aquí irá la gráfica (JS o imagen futura) -->
+            <p>⭐ 4.3 / 5</p>
+        </div>
+    </section>
+
+    <!-- Juegos similares -->
+    <section class="similares-section">
+        <h2>Juegos similares</h2>
+        <div class="similares-grid">
+            <!-- Repetir divs según juegos similares -->
+            <div class="juego-card">
+                <img src="/img/games/placeholder1.png" alt="Juego similar">
+                <p>Nombre del juego</p>
+            </div>
+            <!-- ... -->
+        </div>
+    </section>
+
+    <!-- Reseñas -->
+    <section class="reviews-section" th:if="${reviews != null and !reviews.isEmpty()}">
+        <h2>Reseñas</h2>
+        <div th:each="review : ${reviews}" class="review">
+            <p class="review-autor">
+                 <strong th:text="${review.usuarioNombre}">Usuario</strong> -
+                <span th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">fecha</span>
+
+
+            </p>
+            <p class="review-texto" th:text="${review.reseña}">Texto de la reseña</p>
+            <p class="review-nota">⭐ <span th:text="${review.nota}">8</span> / 10</p>
+        </div>
+    </section>
+
 </main>
+
 
 <footer class="main-footer"></footer>
 </body>

@@ -35,6 +35,22 @@
 
 
 </body>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const errorMessage = document.querySelector('.error-message');
+        const loginContainer = document.querySelector('.login-container');
+
+        if (errorMessage && errorMessage.textContent.trim() !== "") {
+            // Agrega la clase de sacudida
+            loginContainer.classList.add('shake');
+
+            // Elimina la clase después de que termine la animación para permitir futuras repeticiones
+            loginContainer.addEventListener('animationend', () => {
+                loginContainer.classList.remove('shake');
+            }, { once: true });
+        }
+    });
+</script>
 
 
 <script src="/js/verPswd.js"></script>

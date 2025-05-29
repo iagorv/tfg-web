@@ -1,6 +1,7 @@
 package com.example.achievity.Service;
 
 
+import com.example.achievity.Model.DTOs.ReviewConUsuarioDTO;
 import com.example.achievity.Model.DTOs.ReviewCrearDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,15 @@ public class ReviewService {
                 .toBodilessEntity()
                 .block();
     }
+
+    public List<ReviewConUsuarioDTO> obtenerReviewsPorJuego(Long juegoId) {
+        return webClient.get()
+                .uri("/api/review/juego/{juegoId}/con-usuario", juegoId)
+                .retrieve()
+                .bodyToFlux(ReviewConUsuarioDTO.class)
+                .collectList()
+                .block();
+    }
+
 
 }

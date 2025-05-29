@@ -86,3 +86,135 @@ body {
         text-align: center;
     }
 }
+.detalle-top {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Acciones (review, deseados) */
+.acciones-juego {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    background-color: #9f6eed;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #b187f7;
+}
+
+.btn-secundario {
+    background-color: #44445f;
+}
+
+.btn-secundario:hover {
+    background-color: #5c5c7a;
+}
+
+/* Sección de nota media */
+.rating-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #2a2a40;
+    border-radius: 8px;
+}
+
+.grafica-placeholder {
+    margin-top: 10px;
+    height: 150px;
+    background-color: #1e1e2f;
+    border: 1px dashed #6fe381;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6fe381;
+    font-size: 24px;
+}
+
+/* Juegos similares */
+.similares-section {
+    margin-top: 40px;
+}
+
+.similares-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.juego-card {
+    background-color: #2a2a40;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    width: 120px;
+}
+
+.juego-card img {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+/* Reseñas */
+.reviews-section {
+    margin-top: 40px;
+}
+
+.review {
+    background-color: #2a2a40;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.review-autor {
+    color: #9f6eed;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.review-texto {
+    font-size: 15px;
+    color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    .detalle-top {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-juego {
+        text-align: center;
+    }
+
+    .acciones-juego {
+        justify-content: center;
+    }
+
+    .similares-grid {
+        justify-content: center;
+    }
+}
+.subtitulo {
+    font-style: italic;
+    font-size: 16px;
+    color: #cccccc;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
