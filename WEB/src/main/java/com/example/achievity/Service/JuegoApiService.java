@@ -60,4 +60,14 @@ public class JuegoApiService {
         }
     }
 
+    public List<JuegoResumenDTO> obtenerJuegosSimilares(Long id) {
+        return webClient.get()
+                .uri("/api/juegos/{id}/similares", id)
+                .retrieve()
+                .bodyToFlux(JuegoResumenDTO.class)
+                .collectList()
+                .block();
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.achievity.Controller;
 
 import com.example.achievity.Authentication.SessionManager;
 import com.example.achievity.Model.DTOs.JuegoDetalleDTO;
+import com.example.achievity.Model.DTOs.JuegoResumenDTO;
 import com.example.achievity.Model.DTOs.ReviewConUsuarioDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
 import com.example.achievity.Service.JuegoApiService;
@@ -57,11 +58,11 @@ public class JuegosController {
 
     @GetMapping("/juegos/{id}")
     public String detalleJuego(@PathVariable Long id, Model model) {
-        JuegoDetalleDTO juego = juegoApiService.obtenerJuegoPorId(id);
-
         if (!sessionManager.estaLogeado()) {
             return "redirect:/login";
         }
+
+        JuegoDetalleDTO juego = juegoApiService.obtenerJuegoPorId(id);
 
         if (juego == null) {
             return "redirect:/index";
@@ -69,11 +70,16 @@ public class JuegosController {
 
         List<ReviewConUsuarioDTO> reviews = reviewService.obtenerReviewsPorJuego(id);
 
+        // 👇 Juegos similares
+        List<JuegoResumenDTO> juegosSimilares = juegoApiService.obtenerJuegosSimilares(id);
+
         model.addAttribute("juego", juego);
         model.addAttribute("reviews", reviews);
+        model.addAttribute("similares", juegosSimilares); // ⬅️ Añadido
 
         return "detalle-juego";
     }
+
 
 
 

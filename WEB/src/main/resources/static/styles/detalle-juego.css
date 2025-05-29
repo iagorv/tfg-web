@@ -218,3 +218,25 @@ body {
     margin-bottom: 20px;
 }
 
+
+.juego-card p {
+    color: #9f6eed;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 5px #9f6eed, 0 0 10px #9f6eed;
+    transition: color 0.3s ease;
+}
+
+.juego-card:hover p {
+    color: #b187f7;
+}
+
+.juego-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.juego-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
