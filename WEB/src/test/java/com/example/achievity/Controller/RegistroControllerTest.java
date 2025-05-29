@@ -55,5 +55,5 @@ class RegistroControllerTest {
                 .andExpect(flash().attribute("success", "Cuenta creada con éxito. Por favor, inicia sesión."));
     }
 
- 
+
 }

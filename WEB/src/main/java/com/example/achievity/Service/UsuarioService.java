@@ -1,6 +1,7 @@
 package com.example.achievity.Service;
 
 import com.example.achievity.Model.DTOs.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,14 +14,22 @@ public class UsuarioService {
     public UsuarioService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
-
     public UsuarioDTO login(LoginDTO loginDTO) {
-        return webClient.post()
-                .uri("/api/login")
-                .bodyValue(loginDTO)
-                .retrieve()
-                .bodyToMono(UsuarioDTO.class)
-                .block();
+        try {
+            return webClient.post()
+                    .uri("/api/login")
+                    .bodyValue(loginDTO)
+                    .retrieve()
+                    .bodyToMono(UsuarioDTO.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                // Credenciales incorrectas, devolvemos null para manejarlo en el controlador
+                return null;
+            }
+            // Para otras excepciones, re-lanzamos o manejamos según convenga
+            throw e;
+        }
     }
 
     public void registrar(RegistroDTO registroDTO) {
