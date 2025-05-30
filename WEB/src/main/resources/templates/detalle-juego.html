@@ -40,11 +40,14 @@
         <!-- Nota media (gráfica) -->
         <section class="rating-section">
             <h2>Nota media</h2>
-            <div class="grafica-placeholder">
-                <!-- Aquí irá la gráfica (JS o imagen futura) -->
-                <p>⭐ 4.3 / 5</p>
+            <p id="nota-media-texto">⭐ Cargando...</p>
+            <div class="grafico-container" style="margin-top: 20px;">
+                <canvas id="graficoNotas" width="400" height="150"></canvas>
             </div>
         </section>
+
+
+
 
         <section class="similares-section">
             <h2>Juegos similares</h2>
@@ -80,4 +83,65 @@
 
     <footer class="main-footer"></footer>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const idJuego = [[${juego.id}]];
+
+        fetch(`http://localhost:8080/api/review/juego/${idJuego}/distribucion`)
+            .then(response => response.json())
+            .then(data => {
+                const conteos = data.conteos;
+                const notaMedia = data.notaMedia;
+
+                document.getElementById('nota-media-texto').textContent = `⭐ ${notaMedia.toFixed(1)} / 10`;
+
+                const ctx = document.getElementById('graficoNotas').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Array(10).fill(''),
+                        datasets: [{
+                            label: 'Notas',
+                            data: conteos,
+                            backgroundColor: '#9f6eed',
+                            hoverBackgroundColor: '#b187f7',
+                            borderRadius: 4,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#2a2a40',
+                                titleColor: '#fff',
+                                bodyColor: '#eaeaea',
+                                callbacks: {
+                                    label: (ctx) => `Notas entre ${ctx.dataIndex}–${ctx.dataIndex + 1}: ${ctx.raw}`
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { display: false },
+                            y: { display: false }
+                        },
+                        animation: {
+                            duration: 800,
+                            easing: 'easeOutCubic'
+                        }
+                    }
+                });
+            })
+            .catch(err => {
+                console.error('Error al obtener la distribución de notas:', err);
+                document.getElementById('nota-media-texto').textContent = "⭐ No disponible";
+            });
+        /*]]>*/
+    </script>
+
+
     </html>
