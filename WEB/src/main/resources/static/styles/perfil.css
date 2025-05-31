@@ -215,3 +215,37 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 0 0 17px rgba(255, 215, 0, 0.4);
     }
 }
+.btn-premium {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #ccc;
+    font-weight: bold;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-conectar {
+    background-color: #444;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+
+.btn-conectar:hover {
+    background-color: #5a5a7a;
+}
+

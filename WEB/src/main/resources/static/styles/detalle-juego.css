@@ -27,76 +27,81 @@ body {
     margin-bottom: 40px;
 }
 
-/* CONTENIDO DETALLE */
+/* CONTENEDOR GENERAL */
 .detalle-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    max-width: 1200px;
+    padding: 0 40px 40px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* SIDEBAR */
+.juego-sidebar {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* MAIN CONTENT */
+.main-content {
     flex: 1;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 40px;
-    padding: 0 40px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 /* POSTER */
 .poster img {
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     background-color: #2a2a40;
     padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* INFORMACIÓN DEL JUEGO */
+/* INFO DEL JUEGO */
 .info-juego {
-    flex: 1;
+    width: 100%;
+    margin-top: 20px;
     max-width: 600px;
 }
 
-.info-juego .titulo {
-    font-size: 28px;
-    margin-bottom: 16px;
+.titulo {
+    font-size: 30px;
+    margin-bottom: 10px;
     color: #9f6eed;
 }
 
+.subtitulo {
+    font-style: italic;
+    font-size: 16px;
+    color: #cccccc;
+    margin-bottom: 20px;
+}
+
 .info-juego p {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-size: 15px;
     line-height: 1.5;
 }
 
 .descripcion {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 16px;
     color: #cccccc;
 }
 
-/* RESPONSIVE */
-@media (max-width: 800px) {
-    .detalle-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .poster img {
-        width: 80%;
-    }
-
-    .info-juego {
-        text-align: center;
-    }
-}
-.detalle-top {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-/* Acciones (review, deseados) */
+/* ACCIONES */
 .acciones-juego {
     margin-top: 20px;
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -123,61 +128,42 @@ body {
     background-color: #5c5c7a;
 }
 
-/* Sección de nota media */
-.rating-section {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #2a2a40;
-    border-radius: 8px;
+/* TITULOS DE SECCION */
+.rating-section h2,
+.reviews-section h2,
+.similares-section h2 {
+    font-size: 18px;
+    color: #cccccc;
+    margin-bottom: 10px;
 }
 
-.grafica-placeholder {
-    margin-top: 10px;
-    height: 150px;
-    background-color: #1e1e2f;
-    border: 1px dashed #6fe381;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6fe381;
-    font-size: 24px;
-}
-
-/* Juegos similares */
+/* SECCIONES */
+.rating-section,
+.reviews-section,
 .similares-section {
-    margin-top: 40px;
-}
-
-.similares-grid {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.juego-card {
     background-color: #2a2a40;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-    width: 120px;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-.juego-card img {
+/* RATING */
+.rating-section {
+    margin-top: 30px;
     width: 100%;
-    border-radius: 4px;
-    margin-bottom: 8px;
+    text-align: center;
 }
 
-/* Reseñas */
-.reviews-section {
-    margin-top: 40px;
+#graficoNotas {
+    margin-top: 10px;
+    max-width: 100%;
 }
 
+/* REVIEWS */
 .review {
-    background-color: #2a2a40;
+    background-color: #1e1e2f;
     padding: 15px;
     border-radius: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .review-autor {
@@ -191,10 +177,59 @@ body {
     color: #ccc;
 }
 
-/* Responsive */
+.review-nota {
+    margin-top: 8px;
+}
+
+/* SIMILARES */
+.similares-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.juego-card {
+    width: 120px;
+    text-align: center;
+    background-color: #1e1e2f;
+    border-radius: 6px;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.juego-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.juego-card img {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.juego-card p {
+    color: #9f6eed;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 5px #9f6eed, 0 0 10px #9f6eed;
+    transition: color 0.3s ease;
+}
+
+.juego-card:hover p {
+    color: #b187f7;
+}
+
+/* RESPONSIVE */
 @media (max-width: 800px) {
-    .detalle-top {
+    .detalle-container {
         flex-direction: column;
+        padding: 0 20px 40px;
+    }
+
+    .juego-sidebar,
+    .main-content {
+        width: 100%;
         align-items: center;
     }
 
@@ -209,34 +244,22 @@ body {
     .similares-grid {
         justify-content: center;
     }
-}
-.subtitulo {
-    font-style: italic;
-    font-size: 16px;
-    color: #cccccc;
-    margin-top: -10px;
-    margin-bottom: 20px;
-}
 
-
-.juego-card p {
-    color: #9f6eed;
-    font-weight: bold;
+    .poster img {
+        width: 80%;
+    }
+}
+/* Elimina subrayado de links dentro de juego-card */
+.juego-card a {
     text-decoration: none;
-    text-shadow: 0 0 5px #9f6eed, 0 0 10px #9f6eed;
-    transition: color 0.3s ease;
 }
 
-.juego-card:hover p {
-    color: #b187f7;
+/* La info del juego ahora se adapta a estar dentro del main-content */
+.info-juego {
+    max-width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #2a2a40;
+    border-radius: 10px;
 }
-
-.juego-card {
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.juego-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-}
-

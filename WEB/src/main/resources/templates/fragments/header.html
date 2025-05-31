@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<header class="main-header" th:fragment="headerFragment">
+<body><header class="main-header" th:fragment="headerFragment">
   <head>
     <link rel="stylesheet" href="/styles/header.css">
     <script src="/js/header.js"></script>
-
   </head>
   <div class="logo">
-    <img src="/img/logo.png" alt="Logo">
+    <a href="/index"><img src="/img/logo.png" alt="Logo"></a>
   </div>
 
   <div class="header-right">
@@ -27,7 +25,4 @@
   </div>
 </header>
 
-
-</body>
-</html>
 
