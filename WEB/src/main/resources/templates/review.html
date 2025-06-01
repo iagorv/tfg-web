@@ -26,8 +26,10 @@
 
 <div class="review-wrapper">
 <div class="review-card">
-  <h2 th:text="'Reseñar: ' + ${juego.nombre}">Añadir Reseña</h2>
-
+  <div class="review-header">
+    <img class="portada" th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego" />
+    <h2 th:text="'Reseñar: ' + ${juego.nombre}">Añadir Reseña</h2>
+  </div>
   <div class="rating">
     <span class="star" data-index="1"></span>
     <span class="star" data-index="2"></span>
@@ -45,6 +47,13 @@
   <form method="post" th:action="@{/reviews}">
     <input type="hidden" name="juegoId" th:value="${juego.id}"/>
     <input type="hidden" name="nota" id="rating-input" value="0"/>
+
+    <div class="date-field">
+      <label for="fechaCreacion">Fecha de la reseña</label>
+      <input type="date" id="fechaCreacion" name="fechaCreacion" required>
+
+    </div>
+
     <textarea id="review-text" name="reseña" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
 
     <p id="char-warning" class="char-warning" style="display:none; color: #ff5c5c; font-size: 0.9em; margin-top: 4px;">

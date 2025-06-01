@@ -19,3 +19,28 @@ document.querySelector('.profile-form').addEventListener('submit', function(even
         edadError.style.display = 'none';
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('.btn-premium');
+
+    // Asegúrate de que idUsuario se ha definido en el HTML mediante th:inline="javascript"
+    if (!btn || typeof idUsuario === 'undefined') return;
+
+    btn.addEventListener('click', async () => {
+        const esPremium = btn.textContent.includes('Anular');
+
+        try {
+            await fetch(`http://localhost:8080/api/user/${idUsuario}/premium`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ premium: !esPremium })
+            });
+
+            location.reload(); // Recargar sin alertas
+        } catch (e) {
+            console.error('Error al cambiar estado premium:', e);
+        }
+    });
+});
+

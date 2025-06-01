@@ -144,3 +144,46 @@ body::before {
     font-style: italic;
 }
 
+.review-header {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     margin-bottom: 20px;
+ }
+
+.review-header img.portada {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.review-header img.portada:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.date-field label {
+    margin-bottom: 6px;
+    font-size: 0.95em;
+    color: #cccccc;
+}
+
+.date-field input[type="date"] {
+    background-color: #1e1e2f;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 8px;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+

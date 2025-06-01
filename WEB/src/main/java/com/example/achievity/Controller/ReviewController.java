@@ -32,7 +32,8 @@ public class ReviewController {
         }
 
         reviewDTO.setUsuarioId(usuarioId);
-        reviewDTO.setFechaCreacion(LocalDate.now());
+
+        
         System.out.println("Enviando review: " + reviewDTO);
 
         try {
