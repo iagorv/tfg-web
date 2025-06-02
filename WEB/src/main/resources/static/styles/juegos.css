@@ -1,0 +1,98 @@
+body {
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #9f6eed;
+    text-align: center;
+}
+
+/* LISTADO DE JUEGOS */
+.games-list ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* ✅ 4 por fila */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.game-item {
+    background-color: #2a2a40;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+.game-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(111, 91, 237, 0.6);
+    border: 2px solid #9f6eed;
+}
+
+.game-image {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.game-name {
+    font-size: 14px;
+    color: #eaeaea;
+    margin-top: 10px;
+}
+
+/* Paginación estilo "misreviews" */
+.paginacion {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pagination-buttons a {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 0 6px;
+    background-color: #4b3a94; /* Morado oscuro */
+    color: #eaeaea;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+    box-shadow: 0 2px 6px rgba(79, 67, 149, 0.5);
+}
+
+.pagination-buttons a:hover:not(.current-page) {
+    background-color: #6f5bed; /* Morado más claro */
+    box-shadow: 0 4px 10px rgba(111, 91, 237, 0.7);
+}
+
+.pagination-buttons a.current-page {
+    background-color: #9f6eed; /* Morado brillante */
+    font-weight: bold;
+    pointer-events: none;
+    box-shadow: 0 0 8px #9f6eed;
+    text-decoration: underline;
+}

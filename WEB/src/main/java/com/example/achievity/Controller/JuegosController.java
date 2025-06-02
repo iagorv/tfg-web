@@ -7,10 +7,12 @@ import com.example.achievity.Model.DTOs.ReviewConUsuarioDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
 import com.example.achievity.Service.JuegoApiService;
 import com.example.achievity.Service.ReviewService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,10 +29,19 @@ public class JuegosController {
         this.reviewService = reviewService;
     }
     @GetMapping("/juegos")
-    public String mostrarJuegos(Model model) {
-        model.addAttribute("juegos", juegoApiService.obtenerResumenDeJuegos());
+    public String mostrarJuegos(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "12") int size,
+                                Model model) {
+
+        Page<JuegoResumenDTO> juegosPage = juegoApiService.obtenerJuegosPaginados(page, size);
+
+        model.addAttribute("juegos", juegosPage.getContent());
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", juegosPage.getTotalPages());
+        model.addAttribute("size", size);
         return "juegos";
     }
+
 
 
     @GetMapping("/index")

@@ -4,6 +4,9 @@ package com.example.achievity.Service;
 import com.example.achievity.Model.DTOs.JuegoDetalleDTO;
 import com.example.achievity.Model.DTOs.JuegoNombreDTO;
 import com.example.achievity.Model.DTOs.JuegoResumenDTO;
+import com.example.achievity.util.RestResponsePage;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -66,6 +69,20 @@ public class JuegoApiService {
                 .retrieve()
                 .bodyToFlux(JuegoResumenDTO.class)
                 .collectList()
+                .block();
+    }
+    public Page<JuegoResumenDTO> obtenerJuegosPaginados(int page, int size) {
+        ParameterizedTypeReference<RestResponsePage<JuegoResumenDTO>> responseType =
+                new ParameterizedTypeReference<>() {};
+
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/juegos/paginas")
+                        .queryParam("page", page)
+                        .queryParam("size", size)
+                        .build())
+                .retrieve()
+                .bodyToMono(responseType)
                 .block();
     }
 

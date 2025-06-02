@@ -2,14 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista de Juegos</title>
+    <link rel="stylesheet" href="/styles/juegos.css">
+
 </head>
 <body>
-<h1>Juegos Disponibles</h1>
-<ul>
-    <li th:each="juego : ${juegos}">
-        <h3 th:text="${juego.nombre}"></h3>
-        <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Imagen del juego" width="200"/>
-    </li>
-</ul>
+<div th:replace="fragments/header :: headerFragment"></div>
+<main class="main-content">
+    <h2 class="section-title">Todos los Juegos</h2>
+
+    <section class="games-list">
+        <ul>
+            <li th:each="juego : ${juegos}" class="game-item">
+                <a th:href="@{/juegos/{id}(id=${juego.id})}">
+                    <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
+                         alt="Imagen del juego" class="game-image"/>
+                    <h3 class="game-name" th:text="${juego.nombre}"></h3>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Paginación -->
+    <div class="paginacion" th:if="${totalPaginas > 1}">
+        <div class="pagination-buttons">
+            <a th:if="${paginaActual > 0}"
+               th:href="@{'/juegos'(page=${paginaActual - 1}, size=${size})}">Anterior</a>
+
+            <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+                <a th:href="@{'/juegos'(page=${i}, size=${size})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == paginaActual} ? 'current-page' : ''">
+                </a>
+            </span>
+
+            <a th:if="${paginaActual + 1 < totalPaginas}"
+               th:href="@{'/juegos'(page=${paginaActual + 1}, size=${size})}">Siguiente</a>
+        </div>
+    </div>
+
+</main>
+
 </body>
 </html>

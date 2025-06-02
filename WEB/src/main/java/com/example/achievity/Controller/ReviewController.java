@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ReviewController {
@@ -67,10 +69,44 @@ public class ReviewController {
         model.addAttribute("misReviews", reviewsPage.getContent());
         model.addAttribute("paginaActual", page);
         model.addAttribute("totalPaginas", reviewsPage.getTotalPages());
-        model.addAttribute("size", size);  // <-- agregar tamaño al modelo
+        model.addAttribute("size", size);
+
+
+        model.addAttribute("usuario", Map.of("id", usuarioId));
 
         return "mis-reviews";
     }
+
+    @GetMapping("/reviews/editar")
+    public String mostrarFormularioReviewEdicion(
+            @RequestParam Long reviewId,
+            @RequestParam Long juegoId,
+            @RequestParam String juegoNombre,
+            @RequestParam int nota,
+            @RequestParam String reseña,
+            Model model) {
+
+        if (!sessionManager.estaLogeado()) {
+            return "redirect:/login";
+        }
+
+
+        Map<String, Object> juego = new HashMap<>();
+        juego.put("id", juegoId);
+        juego.put("nombre", juegoNombre);
+
+        model.addAttribute("juego", juego); // Esto ya cubre juego.id y juego.nombre en el HTML
+        model.addAttribute("esEdicion", true);
+        model.addAttribute("nota", nota);
+        model.addAttribute("reseña", reseña);
+        model.addAttribute("reviewId", reviewId);
+
+        return "review"; // Reutiliza el HTML existente
+    }
+
+
+
+
 
 
 

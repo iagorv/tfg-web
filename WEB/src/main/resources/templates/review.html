@@ -28,7 +28,11 @@
 <div class="review-card">
   <div class="review-header">
     <img class="portada" th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego" />
-    <h2 th:text="'Reseñar: ' + ${juego.nombre}">Añadir Reseña</h2>
+    <h2 th:text="${esEdicion} ? 'Editar reseña de: ' + ${juego.nombre} : 'Reseñar: ' + ${juego.nombre}">Título</h2>
+
+
+
+
   </div>
   <div class="rating">
     <span class="star" data-index="1"></span>
