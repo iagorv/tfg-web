@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Reviews</title>
+    <link rel="stylesheet" href="/styles/mis-reviews.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<main class="reviews-page-container">
+    <section class="reviews-header">
+        <h1>Mis Reseñas</h1>
+        <p>Estas son todas tus reseñas publicadas</p>
+    </section>
+
+    <section class="reviews-list" th:if="${misReviews != null and !misReviews.isEmpty()}">
+        <article th:each="review : ${misReviews}" class="review-card">
+            <div class="game-cover">
+                <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}" alt="Portada juego">
+            </div>
+
+            <div class="review-info">
+                <div class="review-header">
+                    <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="review-game-title" th:text="${review.tituloJuego}">Nombre del juego</a>
+                    <span class="review-score" th:text="${review.nota} + '/10'">8/10</span>
+                </div>
+                <p class="review-texto" th:text="${review.reseña}">Texto de la reseña...</p>
+                <p class="review-fecha" th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">01/01/2024</p>
+            </div>
+        </article>
+    </section>
+    <div class="paginacion" th:if="${totalPaginas > 1}">
+        <div class="pagination-buttons">
+            <!-- Botón Anterior -->
+            <a th:if="${paginaActual > 0}"
+               th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size})}">
+                Anterior
+            </a>
+
+            <!-- Páginas: muestra botones para cada página -->
+            <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+            <a th:href="@{'/mis-reviews'(page=${i}, size=${size})}"
+               th:text="${i + 1}"
+               th:classappend="${i == paginaActual} ? 'current-page' : ''">
+            </a>
+        </span>
+
+            <!-- Botón Siguiente -->
+            <a th:if="${paginaActual + 1 < totalPaginas}"
+               th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size})}">
+                Siguiente
+            </a>
+        </div>
+    </div>
+
+
+    <div class="no-reviews" th:if="${misReviews == null or misReviews.isEmpty()}">
+        <p>No has escrito ninguna reseña todavía.</p>
+    </div>
+</main>
+
+<footer class="main-footer"></footer>
+</body>
+</html>

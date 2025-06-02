@@ -1,0 +1,95 @@
+body {
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.reviews-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.review-card {
+    display: flex;
+    background-color: #2a2a40;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.review-game-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.review-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.game-title {
+    font-weight: bold;
+    color: #9f6eed;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.game-title:hover {
+    text-decoration: underline;
+    color: #b187f7;
+}
+
+.review-date {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.review-text {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.star {
+    font-size: 22px;
+    color: lightgray;
+    position: relative;
+}
+
+.star.full {
+    color: gold;
+}
+
+.star.half {
+    background: linear-gradient(to right, gold 50%, lightgray 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.score {
+    background-color: #9f6eed;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}

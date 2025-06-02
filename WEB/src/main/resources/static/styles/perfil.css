@@ -251,4 +251,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: linear-gradient(135deg, #7b68ee, #5f4b8b);
     transform: translateY(-2px);
 }
+.game-title-link {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #eaeaea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.game-title-link:hover {
+    color: #9f6eed;
+    text-decoration: underline;
+}
+
 

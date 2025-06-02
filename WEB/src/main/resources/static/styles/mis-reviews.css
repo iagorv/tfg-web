@@ -1,0 +1,133 @@
+body {
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.reviews-page-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.reviews-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.reviews-header h1 {
+    color: #9f6eed;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-card {
+    display: flex;
+    background-color: #2a2a40;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 20px;
+    align-items: flex-start;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.game-cover img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.review-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-game-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #eaeaea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.review-game-title:hover {
+    color: #b187f7;
+}
+
+.review-score {
+    background-color: #9f6eed;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 14px;
+}
+
+.review-texto {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.review-fecha {
+    font-size: 12px;
+    color: #999;
+    margin-top: auto;
+}
+
+.no-reviews {
+    text-align: center;
+    color: #aaa;
+    font-size: 16px;
+    margin-top: 40px;
+}
+.current-page {
+    font-weight: bold;
+    text-decoration: underline;
+    pointer-events: none; /* Desactiva click en la página actual */
+}
+.paginacion {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.pagination-buttons a {
+    display: inline-block;
+    margin: 0 6px;
+    padding: 8px 14px;
+    background-color: #4b3a94; /* Morado oscuro */
+    color: #eaeaea;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+    box-shadow: 0 2px 6px rgba(79, 67, 149, 0.5);
+}
+
+.pagination-buttons a:hover:not(.current-page) {
+    background-color: #6f5bed; /* Morado más claro al hover */
+    box-shadow: 0 4px 10px rgba(111, 91, 237, 0.7);
+}
+
+.pagination-buttons a.current-page {
+    background-color: #9f6eed; /* Morado brillante */
+    font-weight: bold;
+    pointer-events: none; /* No se puede clickear */
+    box-shadow: 0 0 8px #9f6eed;
+}

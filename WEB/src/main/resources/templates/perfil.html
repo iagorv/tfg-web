@@ -54,7 +54,8 @@
 
             <div class="review-content">
               <div class="review-header">
-                <strong th:text="${review.tituloJuego}">Nombre del Juego</strong>
+                <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="game-title-link" th:text="${review.tituloJuego}">Nombre del Juego</a>
+
 
                 <div class="review-rating">
                   <span class="star" data-index="1"></span>

@@ -100,3 +100,22 @@
 .user-menu.active .user-dropdown {
     display: block;
 }
+.actividad-link {
+    color: #eaeaea;
+    text-decoration: none;
+    font-size: 14px;
+    background: linear-gradient(90deg, #eaeaea, #eaeaea);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.5s ease;
+}
+
+.actividad-link:hover {
+    background: linear-gradient(90deg, #9f6eed, #b187f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+

@@ -2,11 +2,17 @@ package com.example.achievity.Controller;
 
 import com.example.achievity.Authentication.SessionManager;
 import com.example.achievity.Model.DTOs.ReviewCrearDTO;
+import com.example.achievity.Model.DTOs.ReviewDTO;
 import com.example.achievity.Service.ReviewService;
 import com.example.achievity.Service.UsuarioService;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -33,7 +39,7 @@ public class ReviewController {
 
         reviewDTO.setUsuarioId(usuarioId);
 
-        
+
         System.out.println("Enviando review: " + reviewDTO);
 
         try {
@@ -45,6 +51,28 @@ public class ReviewController {
 
         return "redirect:/index";
     }
+
+    @GetMapping("/mis-reviews")
+    public String verMisReviews(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "6") int size,
+                                Model model) {
+        Long usuarioId = sessionManager.getIdUsuarioLogeado();
+
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
+
+        Page<ReviewDTO> reviewsPage = reviewService.obtenerReviewsPaginadas(usuarioId, page, size);
+
+        model.addAttribute("misReviews", reviewsPage.getContent());
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", reviewsPage.getTotalPages());
+        model.addAttribute("size", size);  // <-- agregar tamaño al modelo
+
+        return "mis-reviews";
+    }
+
+
 
 
 }
