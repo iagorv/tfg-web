@@ -11,8 +11,12 @@
   </div>
 
   <div class="header-right">
+    <a href="/juegos" class="actividad-link">Juegos</a>
     <a href="/mis-reviews" class="actividad-link">Actividad</a>
-    <input type="text" class="search-bar" placeholder="Buscar juegos...">
+    <form action="/resultados" method="get" class="search-form">
+      <input type="text" name="query" class="search-bar" placeholder="Buscar..." required>
+    </form>
+
 
     <div class="user-menu">
       <img src="/img/user.png" alt="User Icon">

@@ -12,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -65,6 +66,9 @@ public class ReviewService {
                 .bodyToMono(responseType)
                 .block();
     }
+
+
+
 
 
 

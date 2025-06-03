@@ -1,0 +1,256 @@
+/* RESET Y BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    min-height: 100vh;
+}
+
+.resultados {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.resultados h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #9f6eed;
+    text-align: center;
+}
+
+.resultados h2 {
+    font-size: 20px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #cccccc;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+/* === SECCION DE JUEGOS === */
+.juegos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.juego-item {
+    background-color: #2a2a40;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.juego-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 10px #9f6eed;
+    border: 1px solid #9f6eed;
+}
+
+.juego-item a {
+    color: #eaeaea;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.juego-item a:hover {
+    color: #b187f7;
+    text-decoration: underline;
+}
+
+/* === USUARIOS === */
+.usuarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.usuario-card {
+    background-color: #2a2a40;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.usuario-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px #9f6eed;
+    border: 1px solid #9f6eed;
+}
+
+.usuario-card a {
+    color: #eaeaea;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.usuario-card a:hover {
+    color: #b187f7;
+    text-decoration: underline;
+}
+
+/* === REVIEWS === */
+.reviews-list {
+    list-style: none;
+    padding: 0;
+}
+
+.review-item {
+    background-color: #2a2a40;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.review-item strong {
+    color: #9f6eed;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.review-item span {
+    color: #cccccc;
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .resultados h1 {
+        font-size: 20px;
+    }
+
+    .juego-item,
+    .usuario-card,
+    .review-item {
+        font-size: 14px;
+    }
+}
+/* Portada en lista de juegos */
+.game-thumb {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* Review con portada, estrellas y nota */
+.review-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    align-items: center;
+    background-color: #2a2a40;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 5px;
+}
+
+.review-rating {
+    display: flex;
+    font-size: 28px;
+    gap: 2px;
+}
+
+.star {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    position: relative;
+    color: lightgray;
+}
+.star::before {
+    content: '★';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    pointer-events: none;
+    line-height: 28px;
+}
+.star.full::before {
+    color: gold;
+}
+.star.half::before {
+    background: linear-gradient(to right, gold 50%, lightgray 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 28px;
+}
+
+.review-score {
+    background-color: #9f6eed;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 12px;
+    justify-self: end;
+}
+.game-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.review-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.review-content p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: #dddddd;
+}
+.game-title-link {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #eaeaea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.game-title-link:hover {
+    color: #9f6eed;
+    text-decoration: underline;
+}
+

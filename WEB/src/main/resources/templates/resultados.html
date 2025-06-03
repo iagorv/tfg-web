@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultados de Búsqueda</title>
+    <link rel="stylesheet" href="/styles/resultados.css">
+</head>
+<body>
+<header th:replace="fragments/header :: headerFragment"></header>
+
+<div class="resultados">
+    <h1>Resultados para "<span th:text="${query}"></span>"</h1>
+
+    <h2>Juegos</h2>
+    <ul class="juegos-grid">
+        <li class="juego-item" th:each="juego : ${juegos}">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada juego" class="game-thumb" />
+            <a th:href="@{/juegos/{id}(id=${juego.id})}" th:text="${juego.nombre}">Nombre Juego</a>
+        </li>
+    </ul>
+
+    <h2>Usuarios</h2>
+    <ul class="usuarios-grid">
+        <li class="usuario-card" th:each="usuario : ${usuarios}">
+            <a th:href="@{/usuarios/{id}(id=${usuario.id})}" th:text="${usuario.nombre}">Nombre Usuario</a>
+        </li>
+    </ul>
+
+    <h2>Reviews</h2>
+    <ul class="reviews-list">
+        <li class="review-item" th:each="review : ${reviews}">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}" alt="Portada del juego" class="game-image" />
+
+            <div class="review-content">
+                <div class="review-header">
+                    <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="game-title-link" th:text="${review.tituloJuego}">Título</a>
+
+                    <span class="review-score" th:text="${review.nota}">0</span>
+                </div>
+                <p th:text="${review.reseña}">Texto de la reseña</p>
+            </div>
+        </li>
+    </ul>
+
+
+</div>
+</body>
+
+</html>
