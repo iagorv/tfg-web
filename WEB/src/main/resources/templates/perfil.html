@@ -13,7 +13,13 @@
   <main class="profile-container">
     <!-- Sidebar del perfil -->
     <div class="profile-sidebar">
-      <img src="/img/user.png" alt="Avatar" class="profile-avatar">
+      <img th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}"
+           alt="Avatar"
+           class="profile-avatar"
+           id="avatar"
+           title="Haz clic para cambiar tu foto"/>
+
+
       <h3 class="username" th:classappend="${usuario.premium ? 'premium-user' : ''}" th:text="${usuario.nombre}">Usuario</h3>
 
       <p class="email" th:text="${usuario.email}">usuario@ejemplo.com</p>
@@ -76,6 +82,28 @@
     </div>
   </main>
 </div>
+<div id="modalOverlay" class="modal-overlay" style="display: none;">
+  <dialog id="fotoModal" class="foto-modal">
+    <form method="post"
+          enctype="multipart/form-data"
+          th:action="@{/usuarios/{id}/foto(id=${usuario.id})}">
+
+      <h3>Cambiar foto de perfil</h3>
+
+      <img id="previewImagen" class="preview-foto"
+           th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}" />
+
+      <input type="file" name="fotoPerfil" id="fotoInput" accept="image/*" required>
+
+      <div class="modal-actions">
+        <button type="submit">Guardar</button>
+        <button type="button" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+</div>
+
+
 
 <footer class="main-footer"></footer>
 
@@ -98,6 +126,32 @@
       }
     });
   });
+
+
+  const avatar = document.getElementById('avatar');
+  const fotoModal = document.getElementById('fotoModal');
+  const overlay = document.getElementById('modalOverlay');
+  const inputFile = document.getElementById('fotoInput');
+  const preview = document.getElementById('previewImagen');
+
+  avatar.addEventListener('click', () => {
+    overlay.style.display = 'flex';
+    fotoModal.showModal();
+  });
+
+  function cerrarModal() {
+    fotoModal.close();
+    overlay.style.display = 'none';
+  }
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      cerrarModal();
+    }
+  });
+
+
+
 </script>
 
 <script src="/js/perfil.js" type="module"></script>
