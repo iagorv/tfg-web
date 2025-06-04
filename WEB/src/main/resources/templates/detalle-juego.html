@@ -36,7 +36,58 @@
                 <p class="descripcion" th:text="${juego.descripcion}"></p>
                 <div class="acciones-juego">
                     <a th:href="@{'/juegos/' + ${juego.id} + '/review'}" class="btn">Añadir reseña</a>
-                    <button class="btn btn-secundario">➕ Añadir a deseados</button>
+                    <div th:switch="${estadoJuego}">
+                        <!-- Sin estado asignado -->
+                        <form th:case="null" method="post" th:action="@{/estado-juego/cambiar}">
+                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                            <input type="hidden" name="estado" value="deseado" />
+                            <button type="submit" class="btn btn-secundario">➕ Añadir a deseados</button>
+                        </form>
+
+                        <!-- Deseado: jugar o abandonar -->
+                        <div th:case="'deseado'">
+                            <form method="post" th:action="@{/estado-juego/cambiar}">
+                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                                <input type="hidden" name="estado" value="jugando" />
+                                <button type="submit" class="btn btn-secundario">▶️ Empezar a jugar</button>
+                            </form>
+                            <form method="post" th:action="@{/estado-juego/cambiar}">
+                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                                <input type="hidden" name="estado" value="abandonado" />
+                                <button type="submit" class="btn btn-secundario">❌ Abandonar</button>
+                            </form>
+                        </div>
+
+                        <!-- Jugando: terminar o abandonar -->
+                        <div th:case="'jugando'">
+                            <form method="post" th:action="@{/estado-juego/cambiar}">
+                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                                <input type="hidden" name="estado" value="terminado" />
+                                <button type="submit" class="btn btn-secundario">✅ Marcar como terminado</button>
+                            </form>
+                            <form method="post" th:action="@{/estado-juego/cambiar}">
+                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                                <input type="hidden" name="estado" value="abandonado" />
+                                <button type="submit" class="btn btn-secundario">❌ Abandonar</button>
+                            </form>
+                        </div>
+
+                        <!-- Terminado -->
+                        <form th:case="'terminado'" method="post" th:action="@{/estado-juego/cambiar}">
+                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                            <input type="hidden" name="estado" value="jugando" />
+                            <button type="submit" class="btn btn-secundario">🔁 Volver a jugar</button>
+                        </form>
+
+                        <!-- Abandonado -->
+                        <form th:case="'abandonado'" method="post" th:action="@{/estado-juego/cambiar}">
+                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                            <input type="hidden" name="estado" value="deseado" />
+                            <button type="submit" class="btn btn-secundario">➕ Añadir a deseados</button>
+                        </form>
+                    </div>
+
+
                 </div>
             </div>
             <!-- SIMILARES primero -->
@@ -65,6 +116,7 @@
                 </div>
             </section>
         </section>
+
     </main>
 
 

@@ -263,3 +263,30 @@
         background-color: #2a2a40;
         border-radius: 10px;
     }
+    .acciones-juego {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .acciones-juego form {
+        display: inline-block;
+    }
+    @media (max-width: 600px) {
+        .acciones-juego {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .acciones-juego form {
+            width: 100%;
+        }
+
+        .acciones-juego .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }

@@ -6,6 +6,7 @@ import com.example.achievity.Model.DTOs.JuegoResumenDTO;
 import com.example.achievity.Model.DTOs.ReviewConUsuarioDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
 import com.example.achievity.Service.JuegoApiService;
+import com.example.achievity.Service.JuegoUsuarioEstadoService;
 import com.example.achievity.Service.ReviewService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,13 @@ public class JuegosController {
     private final JuegoApiService juegoApiService;
     private final SessionManager sessionManager;
     private final ReviewService reviewService;
+    private final JuegoUsuarioEstadoService juegoUsuarioEstadoService;
 
-    public JuegosController(JuegoApiService juegoApiService, SessionManager sessionManager, ReviewService reviewService) {
+    public JuegosController(JuegoApiService juegoApiService, SessionManager sessionManager, ReviewService reviewService, JuegoUsuarioEstadoService juegoUsuarioEstadoService) {
         this.juegoApiService = juegoApiService;
         this.sessionManager = sessionManager;
         this.reviewService = reviewService;
+        this.juegoUsuarioEstadoService = juegoUsuarioEstadoService;
     }
     @GetMapping("/juegos")
     public String mostrarJuegos(@RequestParam(defaultValue = "0") int page,
@@ -73,6 +76,8 @@ public class JuegosController {
             return "redirect:/login";
         }
 
+        Long usuarioId = sessionManager.getIdUsuarioLogeado(); // <-- importante
+
         JuegoDetalleDTO juego = juegoApiService.obtenerJuegoPorId(id);
 
         if (juego == null) {
@@ -80,13 +85,15 @@ public class JuegosController {
         }
 
         List<ReviewConUsuarioDTO> reviews = reviewService.obtenerReviewsPorJuego(id);
-
-        // 👇 Juegos similares
         List<JuegoResumenDTO> juegosSimilares = juegoApiService.obtenerJuegosSimilares(id);
+
+        // 👇 Consultamos el estado del juego para este usuario
+        String estado = juegoUsuarioEstadoService.obtenerEstadoJuegoParaUsuario(id, usuarioId);
 
         model.addAttribute("juego", juego);
         model.addAttribute("reviews", reviews);
-        model.addAttribute("similares", juegosSimilares); // ⬅️ Añadido
+        model.addAttribute("similares", juegosSimilares);
+        model.addAttribute("estadoJuego", estado); // <- importante
 
         return "detalle-juego";
     }

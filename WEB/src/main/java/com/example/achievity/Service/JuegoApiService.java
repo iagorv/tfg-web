@@ -85,6 +85,21 @@ public class JuegoApiService {
                 .bodyToMono(responseType)
                 .block();
     }
+    public String obtenerEstadoJuegoParaUsuario(Long juegoId, Long usuarioId) {
+        try {
+            return webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/api/estado-juego/{idJuego}")
+                            .queryParam("usuarioId", usuarioId)
+                            .build(juegoId))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+        } catch (WebClientResponseException.NotFound e) {
+            return null;
+        }
+    }
+
 
 
 }
