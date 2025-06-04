@@ -1,159 +1,219 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Perfil</title>
-  <link rel="stylesheet" href="/styles/perfil.css">
-</head>
-<body>
-<div th:replace="fragments/header :: headerFragment"></div>
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="/styles/perfil.css">
+  </head>
+  <body>
+  <div th:replace="fragments/header :: headerFragment"></div>
 
-<div class="profile-content">
+  <div class="profile-content">
 
-  <main class="profile-container">
-    <!-- Sidebar del perfil -->
-    <div class="profile-sidebar">
-      <img th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}"
-           alt="Avatar"
-           class="profile-avatar"
-           id="avatar"
-           title="Haz clic para cambiar tu foto"/>
+    <main class="profile-container">
+      <!-- Sidebar del perfil -->
+      <div class="profile-sidebar">
+        <img th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}"
+             alt="Avatar"
+             class="profile-avatar"
+             id="avatar"
+             title="Haz clic para cambiar tu foto"/>
 
 
-      <h3 class="username" th:classappend="${usuario.premium ? 'premium-user' : ''}" th:text="${usuario.nombre}">Usuario</h3>
+        <h3 class="username" th:classappend="${usuario.premium ? 'premium-user' : ''}" th:text="${usuario.nombre}">Usuario</h3>
 
-      <p class="email" th:text="${usuario.email}">usuario@ejemplo.com</p>
-      <p class="fecha-alta" th:text="${#temporals.format(usuario.fechaAlta, 'dd/MM/yyyy')}">Miembro desde: 01/05/2022</p>
-      <p class="premium-status" th:classappend="${usuario.premium ? 'premium-user' : ''}" th:text="${usuario.premium ? 'Cuenta Premium' : 'Cuenta Básica'}"></p>
+        <p class="email" th:text="${usuario.email}">usuario@ejemplo.com</p>
+        <p class="fecha-alta" th:text="${#temporals.format(usuario.fechaAlta, 'dd/MM/yyyy')}">Miembro desde: 01/05/2022</p>
+        <p class="premium-status" th:classappend="${usuario.premium ? 'premium-user' : ''}" th:text="${usuario.premium ? 'Cuenta Premium' : 'Cuenta Básica'}"></p>
 
-      <button class="btn-premium" th:text="${usuario.premium ? 'Anular suscripción' : 'Hazte Premium'}"></button>
-    </div>
+        <button class="btn-premium" th:text="${usuario.premium ? 'Anular suscripción' : 'Hazte Premium'}"></button>
+        <button id="btn-baja" class="btn-baja-cuenta">Eliminar cuenta</button>
 
-    <!-- Contenido principal -->
-    <div class="profile-form-section">
-      <form class="profile-form" th:action="@{/perfil/actualizar}" method="post">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
+      </div>
 
-        <label for="fechaNacimiento">Fecha de Nacimiento</label>
-        <input type="date" id="fechaNacimiento" name="fechaNacimiento" th:value="${usuario.fechaNacimiento}" required>
+      <!-- Contenido principal -->
+      <div class="profile-form-section">
+        <form class="profile-form" th:action="@{/perfil/actualizar}" method="post">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
 
-        <div class="form-actions">
-          <button type="submit">Guardar cambios</button>
-          <button type="button" class="btn-conectar">Conecta con otras plataformas</button>
+          <label for="fechaNacimiento">Fecha de Nacimiento</label>
+          <input type="date" id="fechaNacimiento" name="fechaNacimiento" th:value="${usuario.fechaNacimiento}" required>
+
+          <div class="form-actions">
+            <button type="submit">Guardar cambios</button>
+            <button type="button" class="btn-conectar">Conecta con otras plataformas</button>
+          </div>
+
+        </form>
+
+        <div th:if="${mensaje}" class="alert alert-success">
+          <p th:text="${mensaje}"></p>
         </div>
-      </form>
+        <div th:if="${error}" class="alert alert-danger">
+          <p th:text="${error}"></p>
+        </div>
 
-      <div th:if="${mensaje}" class="alert alert-success">
-        <p th:text="${mensaje}"></p>
-      </div>
-      <div th:if="${error}" class="alert alert-danger">
-        <p th:text="${error}"></p>
-      </div>
+        <div class="recent-reviews">
+          <h4>Últimas reviews</h4>
+          <div id="reviews-container">
+            <div th:each="review : ${ultimasReviews}" class="review">
+              <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}"
+                   alt="Imagen del juego" class="game-image"/>
 
-      <div class="recent-reviews">
-        <h4>Últimas reviews</h4>
-        <div id="reviews-container">
-          <div th:each="review : ${ultimasReviews}" class="review">
-            <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}"
-                 alt="Imagen del juego" class="game-image"/>
-
-            <div class="review-content">
-              <div class="review-header">
-                <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="game-title-link" th:text="${review.tituloJuego}">Nombre del Juego</a>
+              <div class="review-content">
+                <div class="review-header">
+                  <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="game-title-link" th:text="${review.tituloJuego}">Nombre del Juego</a>
 
 
-                <div class="review-rating">
-                  <span class="star" data-index="1"></span>
-                  <span class="star" data-index="2"></span>
-                  <span class="star" data-index="3"></span>
-                  <span class="star" data-index="4"></span>
-                  <span class="star" data-index="5"></span>
+                  <div class="review-rating">
+                    <span class="star" data-index="1"></span>
+                    <span class="star" data-index="2"></span>
+                    <span class="star" data-index="3"></span>
+                    <span class="star" data-index="4"></span>
+                    <span class="star" data-index="5"></span>
+                  </div>
+
+                  <span class="review-score" th:text="${review.nota}"></span>
                 </div>
-
-                <span class="review-score" th:text="${review.nota}"></span>
+                <p th:text="${review.reseña}"></p>
               </div>
-              <p th:text="${review.reseña}"></p>
             </div>
           </div>
         </div>
-      </div>
 
-    </div>
-  </main>
-</div>
-<div id="modalOverlay" class="modal-overlay" style="display: none;">
-  <dialog id="fotoModal" class="foto-modal">
-    <form method="post"
-          enctype="multipart/form-data"
-          th:action="@{/usuarios/{id}/foto(id=${usuario.id})}">
+      </div>
+    </main>
+  </div>
+  <div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <dialog id="fotoModal" class="foto-modal">
+      <form id="formFotoPerfil" enctype="multipart/form-data">
 
       <h3>Cambiar foto de perfil</h3>
 
-      <img id="previewImagen" class="preview-foto"
-           th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}" />
+        <img id="previewImagen" class="preview-foto"
+             th:src="@{'http://localhost:8080/api/user/usuarios/' + ${usuario.id} + '/foto'}" />
 
-      <input type="file" name="fotoPerfil" id="fotoInput" accept="image/*" required>
+        <input type="file" name="fotoPerfil" id="fotoInput" accept="image/*" required>
 
-      <div class="modal-actions">
-        <button type="submit">Guardar</button>
-        <button type="button" onclick="cerrarModal()">Cancelar</button>
-      </div>
-    </form>
-  </dialog>
-</div>
+        <div class="modal-actions">
+          <button type="submit">Guardar</button>
+          <button type="button" onclick="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
 
 
 
-<footer class="main-footer"></footer>
+  <footer class="main-footer"></footer>
 
-<script>
+  <script>
 
-  const idUsuario = [[${usuario.id}]];
+    const idUsuario = [[${usuario.id}]];
 
-  document.querySelectorAll('.review').forEach(review => {
-    const rating = parseFloat(review.querySelector('.review-score').innerText);
-    const stars = review.querySelectorAll('.star');
+    document.querySelectorAll('.review').forEach(review => {
+      const rating = parseFloat(review.querySelector('.review-score').innerText);
+      const stars = review.querySelectorAll('.star');
 
-    stars.forEach((star, index) => {
-      const position = (index + 1) * 2;
-      star.classList.remove('full', 'half');
+      stars.forEach((star, index) => {
+        const position = (index + 1) * 2;
+        star.classList.remove('full', 'half');
 
-      if (rating >= position) {
-        star.classList.add('full');
-      } else if (rating >= position - 1) {
-        star.classList.add('half');
+        if (rating >= position) {
+          star.classList.add('full');
+        } else if (rating >= position - 1) {
+          star.classList.add('half');
+        }
+      });
+    });
+
+
+    const avatar = document.getElementById('avatar');
+    const fotoModal = document.getElementById('fotoModal');
+    const overlay = document.getElementById('modalOverlay');
+    const inputFile = document.getElementById('fotoInput');
+    const preview = document.getElementById('previewImagen');
+
+    avatar.addEventListener('click', () => {
+      inputFile.value = ''; // Resetea el input
+      preview.src = `http://localhost:8080/api/user/usuarios/${idUsuario}/foto?${Date.now()}`; // Pone la imagen actual real
+      overlay.style.display = 'flex';
+      fotoModal.showModal();
+    });
+
+
+    function cerrarModal() {
+      fotoModal.close();
+      overlay.style.display = 'none';
+    }
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        cerrarModal();
       }
     });
-  });
+    document.getElementById('formFotoPerfil').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("fotoPerfil", document.getElementById('fotoInput').files[0]);
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/user/usuarios/${idUsuario}/foto`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          // Actualizar imagen sin recargar toda la página (opcional):
+          document.getElementById('avatar').src = `http://localhost:8080/api/user/usuarios/${idUsuario}/foto?${new Date().getTime()}`;
+
+          cerrarModal();
+        } else {
+          const errorMsg = await response.text();
+          alert("Error: " + errorMsg);
+        }
+      } catch (err) {
+        alert("Error al conectar con el servidor.");
+      }
+    });
+    inputFile.addEventListener('change', () => {
+      const archivo = inputFile.files[0];
+      if (archivo) {
+        const lector = new FileReader();
+        lector.onload = e => {
+          preview.src = e.target.result;
+        };
+        lector.readAsDataURL(archivo);
+      }
+    });
+
+    document.getElementById("btn-baja").addEventListener("click", async () => {
+      const confirmar = confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.");
+      if (!confirmar) return;
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/user/${idUsuario}`, {
+
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          alert("Tu cuenta ha sido eliminada correctamente.");
+          window.location.href = "/logout"; // o redirige a la página de inicio
+        } else {
+          const msg = await response.text();
+          alert("Error al eliminar la cuenta: " + msg);
+        }
+      } catch (error) {
+        alert("No se pudo conectar con el servidor.");
+      }
+    });
 
 
-  const avatar = document.getElementById('avatar');
-  const fotoModal = document.getElementById('fotoModal');
-  const overlay = document.getElementById('modalOverlay');
-  const inputFile = document.getElementById('fotoInput');
-  const preview = document.getElementById('previewImagen');
+  </script>
 
-  avatar.addEventListener('click', () => {
-    overlay.style.display = 'flex';
-    fotoModal.showModal();
-  });
-
-  function cerrarModal() {
-    fotoModal.close();
-    overlay.style.display = 'none';
-  }
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      cerrarModal();
-    }
-  });
-
-
-
-</script>
-
-<script src="/js/perfil.js" type="module"></script>
-</body>
-</html>
+  <script src="/js/perfil.js" type="module"></script>
+  </body>
+  </html>

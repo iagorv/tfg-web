@@ -1,5 +1,6 @@
 package com.example.achievity.Service;
 
+import com.example.achievity.Authentication.UsuarioDesactivadoException;
 import com.example.achievity.Model.DTOs.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,17 @@ public class UsuarioService {
                     .block();
         } catch (WebClientResponseException e) {
             if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
-                // Credenciales incorrectas, devolvemos null para manejarlo en el controlador
+                // Credenciales inválidas
                 return null;
+            } else if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
+                // Usuario desactivado
+                throw new UsuarioDesactivadoException("Usuario desactivado");
+            } else {
+                throw e;
             }
-            // Para otras excepciones, re-lanzamos o manejamos según convenga
-            throw e;
         }
     }
+
 
     public void registrar(RegistroDTO registroDTO) {
         webClient.post()                   // metodo POST para enviar datos, es los juegos tengo get

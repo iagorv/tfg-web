@@ -2,6 +2,7 @@ package com.example.achievity.Controller;
 
 
 import com.example.achievity.Authentication.SessionManager;
+import com.example.achievity.Authentication.UsuarioDesactivadoException;
 import com.example.achievity.Model.DTOs.LoginDTO;
 import com.example.achievity.Model.DTOs.UsuarioDTO;
 import com.example.achievity.Service.UsuarioService;
@@ -31,17 +32,23 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(LoginDTO loginDTO, Model model) {
-        UsuarioDTO usuario = usuarioService.login(loginDTO);
+        try {
+            UsuarioDTO usuario = usuarioService.login(loginDTO);
 
-        if (usuario != null) {
-            sessionManager.login(usuario.getId(), usuario.getNombre(), usuario.isEsPremium());
+            if (usuario != null) {
+                sessionManager.login(usuario.getId(), usuario.getNombre(), usuario.isEsPremium());
+                return "redirect:/index";
+            } else {
+                model.addAttribute("error", "Credenciales incorrectas");
+                return "login";
+            }
 
-            return "redirect:/index";
-        } else {
-            model.addAttribute("error", "Credenciales incorrectas");
+        } catch (UsuarioDesactivadoException ex) {
+            model.addAttribute("error", "El usuario está desactivado.");
             return "login";
         }
     }
+
     @GetMapping("/logout")
     public String logout() {
         sessionManager.logout();
