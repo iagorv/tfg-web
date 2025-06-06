@@ -9,8 +9,9 @@
 <body>
 <div class="login-container">
     <h2>Crear cuenta</h2>
-    <form id="registro-form"  action="/registro" method="post">
-        <div class="input-group">
+    <form id="registro-form" th:action="@{/registro}" method="post">
+
+    <div class="input-group">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
         </div>
@@ -50,6 +51,6 @@
 </body>
 <script src="/js/verPswd.js"></script>
 <script src="/js/registro.js"></script>
-<script src="/js/registro.js" type="module"></script>
+
 
 </html>
