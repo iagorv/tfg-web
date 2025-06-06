@@ -2,95 +2,146 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mis Reviews</title>
+    <title>Mi Actividad</title>
     <link rel="stylesheet" href="/styles/mis-reviews.css">
+    <style>
+        .actividad-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .actividad-tabs a {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+        }
+
+        .actividad-tabs a.active {
+            border-color: #007BFF;
+            color: #007BFF;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
 
 <main class="reviews-page-container">
     <section class="reviews-header">
-        <h1>Mis Reseñas</h1>
-        <p>Estas son todas tus reseñas publicadas</p>
+        <h1>Mi Actividad</h1>
+        <p>Revisa tus reseñas y entradas en la bitácora</p>
     </section>
 
-    <section class="reviews-list" th:if="${misReviews != null and !misReviews.isEmpty()}">
-        <article th:each="review : ${misReviews}" class="review-card">
-            <div class="game-cover">
-                <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}" alt="Portada juego">
-            </div>
+    <!-- Tabs -->
+    <div class="actividad-tabs">
+        <a th:href="@{/mis-reviews(view='reseñas')}"
+           th:classappend="${view == 'reseñas'} ? 'active' : ''">Reseñas</a>
+        <a th:href="@{/mis-reviews(view='bitacora')}"
+           th:classappend="${view == 'bitacora'} ? 'active' : ''">Bitácora</a>
+    </div>
 
-            <div class="review-info">
-                <div class="review-header">
-                    <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="review-game-title" th:text="${review.tituloJuego}">Nombre del juego</a>
-                    <span class="review-score" th:text="${review.nota} + '/10'">8/10</span>
+    <!-- Vista de RESEÑAS -->
+    <section th:if="${view == 'reseñas'}">
+        <section class="reviews-list" th:if="${misReviews != null and !misReviews.isEmpty()}">
+            <article th:each="review : ${misReviews}" class="review-card">
+                <div class="game-cover">
+                    <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}" alt="Portada juego">
                 </div>
-                <p class="review-texto" th:text="${review.reseña}">Texto de la reseña...</p>
-                <p class="review-fecha" th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">01/01/2024</p>
-                <div class="review-actions">
-                    <a th:href="@{'/reviews/editar'
-    + '?reviewId=' + ${review.id}
-    + '&juegoId=' + ${review.juegoId}
-    + '&juegoNombre=' + ${review.tituloJuego}
-    + '&nota=' + ${review.nota}
-    + '&reseña=' + ${review.reseña}}"
-                       class="edit-button">
-                        Editar
-                    </a>
-                    <button class="delete-button"
-                            th:attr="data-review-id=${review.id}"
-                            onclick="eliminarReview(this)">
-                        Eliminar
-                    </button>
+                <div class="review-info">
+                    <div class="review-header">
+                        <a th:href="@{/juegos/{id}(id=${review.juegoId})}"
+                           class="review-game-title" th:text="${review.tituloJuego}">Nombre del juego</a>
+                        <span class="review-score" th:text="${review.nota} + '/10'">8/10</span>
+                    </div>
+                    <p class="review-texto" th:text="${review.reseña}">Texto de la reseña...</p>
+                    <p class="review-fecha" th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">01/01/2024</p>
+                    <div class="review-actions">
+                        <a th:href="@{'/reviews/editar'
+                            + '?reviewId=' + ${review.id}
+                            + '&juegoId=' + ${review.juegoId}
+                            + '&juegoNombre=' + ${review.tituloJuego}
+                            + '&nota=' + ${review.nota}
+                            + '&reseña=' + ${review.reseña}}"
+                           class="edit-button">
+                            Editar
+                        </a>
+                        <button class="delete-button"
+                                th:attr="data-review-id=${review.id}"
+                                onclick="eliminarReview(this)">
+                            Eliminar
+                        </button>
+                    </div>
                 </div>
+            </article>
+        </section>
 
-
+        <div class="paginacion" th:if="${totalPaginas > 1}">
+            <div class="pagination-buttons">
+                <a th:if="${paginaActual > 0}"
+                   th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='reseñas')}">Anterior</a>
+                <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+                    <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='reseñas')}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
+                </span>
+                <a th:if="${paginaActual + 1 < totalPaginas}"
+                   th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='reseñas')}">Siguiente</a>
             </div>
-
-
-
-        </article>
-    </section>
-    <div class="paginacion" th:if="${totalPaginas > 1}">
-        <div class="pagination-buttons">
-            <!-- Botón Anterior -->
-            <a th:if="${paginaActual > 0}"
-               th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size})}">
-                Anterior
-            </a>
-
-            <!-- Páginas: muestra botones para cada página -->
-            <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
-            <a th:href="@{'/mis-reviews'(page=${i}, size=${size})}"
-               th:text="${i + 1}"
-               th:classappend="${i == paginaActual} ? 'current-page' : ''">
-            </a>
-        </span>
-
-            <!-- Botón Siguiente -->
-            <a th:if="${paginaActual + 1 < totalPaginas}"
-               th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size})}">
-                Siguiente
-            </a>
         </div>
-    </div>
 
+        <div class="no-reviews" th:if="${misReviews == null or misReviews.isEmpty()}">
+            <p>No has escrito ninguna reseña todavía.</p>
+        </div>
+    </section>
 
-    <div class="no-reviews" th:if="${misReviews == null or misReviews.isEmpty()}">
-        <p>No has escrito ninguna reseña todavía.</p>
-    </div>
+    <section th:if="${view == 'bitacora'}">
+        <section class="reviews-list" th:if="${misBitacoras != null and !misBitacoras.isEmpty()}">
+            <article th:each="bitacora : ${misBitacoras}" class="review-card">
+                <div class="game-cover">
+                    <img th:src="@{'http://localhost:8080/img/games/' + ${bitacora.id} + '.png'}" alt="Portada juego">
+                </div>
+                <div class="review-info">
+                    <div class="review-header">
+                        <a th:href="@{/juegos/{id}(id=${bitacora.id})}"
+                           class="review-game-title" th:text="${bitacora.nombreJuego}">Nombre del juego</a>
+                    </div>
+                    <p class="review-texto" th:text="${bitacora.entrada}">Texto de la entrada...</p>
+                    <p class="review-fecha" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">01/01/2024</p>
+                </div>
+            </article>
+        </section>
+
+        <div class="paginacion" th:if="${totalPaginas > 1}">
+            <div class="pagination-buttons">
+                <a th:if="${paginaActual > 0}"
+                   th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='bitacora')}">Anterior</a>
+                <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+                <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='bitacora')}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
+            </span>
+                <a th:if="${paginaActual + 1 < totalPaginas}"
+                   th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='bitacora')}">Siguiente</a>
+            </div>
+        </div>
+
+        <div class="no-reviews" th:if="${misBitacoras == null or misBitacoras.isEmpty()}">
+            <p>No hay entradas en la bitácora todavía.</p>
+        </div>
+    </section>
+
 </main>
 
 <footer class="main-footer"></footer>
-</body>
 
 <script th:inline="javascript">
     const idUsuario = [[${usuario.id}]];
 
-
     function eliminarReview(button) {
         const reviewId = button.getAttribute('data-review-id');
-
         if (!confirm("¿Estás seguro de que deseas eliminar esta review?")) return;
 
         fetch(`http://localhost:8080/api/review/${reviewId}?usuarioId=${idUsuario}`, {
@@ -99,7 +150,6 @@
             .then(response => {
                 if (response.ok) {
                     alert("Review eliminada exitosamente.");
-                    // Recarga la página o elimina visualmente el artículo
                     location.reload();
                 } else if (response.status === 403) {
                     alert("No tienes permiso para eliminar esta review.");
@@ -115,5 +165,5 @@
             });
     }
 </script>
-
+</body>
 </html>

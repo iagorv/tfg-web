@@ -1,8 +1,10 @@
 package com.example.achievity.Controller;
 
 import com.example.achievity.Authentication.SessionManager;
+import com.example.achievity.Model.DTOs.BitacoraDTO;
 import com.example.achievity.Model.DTOs.ReviewCrearDTO;
 import com.example.achievity.Model.DTOs.ReviewDTO;
+import com.example.achievity.Service.BitacoraService;
 import com.example.achievity.Service.ReviewService;
 import com.example.achievity.Service.UsuarioService;
 
@@ -22,12 +24,15 @@ import java.util.Map;
 @Controller
 public class ReviewController {
 
+
+    private final BitacoraService bitacoraService;
     private final ReviewService reviewService;
     private final SessionManager sessionManager;
 
-    public ReviewController(ReviewService reviewService, SessionManager sessionManager) {
+    public ReviewController(ReviewService reviewService, SessionManager sessionManager,BitacoraService bitacoraService) {
         this.reviewService = reviewService;
         this.sessionManager = sessionManager;
+        this.bitacoraService = bitacoraService;
     }
 
     @PostMapping("/reviews")
@@ -54,25 +59,34 @@ public class ReviewController {
         return "redirect:/index";
     }
 
+
     @GetMapping("/mis-reviews")
-    public String verMisReviews(@RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "6") int size,
-                                Model model) {
+    public String verMisActividad(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "6") int size,
+                                  @RequestParam(defaultValue = "reseñas") String view,
+                                  Model model) {
+
         Long usuarioId = sessionManager.getIdUsuarioLogeado();
-
-        if (usuarioId == null) {
-            return "redirect:/login";
-        }
-
-        Page<ReviewDTO> reviewsPage = reviewService.obtenerReviewsPaginadas(usuarioId, page, size);
-
-        model.addAttribute("misReviews", reviewsPage.getContent());
-        model.addAttribute("paginaActual", page);
-        model.addAttribute("totalPaginas", reviewsPage.getTotalPages());
-        model.addAttribute("size", size);
-
+        if (usuarioId == null) return "redirect:/login";
 
         model.addAttribute("usuario", Map.of("id", usuarioId));
+        model.addAttribute("view", view);
+
+        if ("reseñas".equals(view)) {
+            Page<ReviewDTO> reviewsPage = reviewService.obtenerReviewsPaginadas(usuarioId, page, size);
+
+            model.addAttribute("misReviews", reviewsPage.getContent());
+            model.addAttribute("paginaActual", page);
+            model.addAttribute("totalPaginas", reviewsPage.getTotalPages());
+            model.addAttribute("size", size);
+        } else if ("bitacora".equals(view)) {
+            Page<BitacoraDTO> bitacoraPage = bitacoraService.obtenerBitacorasPaginadas(usuarioId, page, size);
+
+            model.addAttribute("misBitacoras", bitacoraPage.getContent());
+            model.addAttribute("paginaActual", page);
+            model.addAttribute("totalPaginas", bitacoraPage.getTotalPages());
+            model.addAttribute("size", size);
+        }
 
         return "mis-reviews";
     }
