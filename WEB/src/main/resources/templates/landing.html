@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Levelviewd - Landing</title>
+  <link rel="stylesheet" href="/styles/header-public.css" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e2f;
+      color: #eaeaea;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #content {
+      overflow: visible;
+      width: 100%;
+      padding-bottom: 500px; /* más espacio para scroll */
+    }
+
+    .text {
+      position: relative;
+      margin-top: 60px;
+      font-weight: 900;
+      font-size: 6vw;
+      text-align: center;
+      z-index: 10;
+      user-select: none;
+      pointer-events: none;
+      font-family: 'Arial Black', Arial, sans-serif;
+      line-height: 1.2;
+    }
+    .text.outline-text {
+      color: transparent;
+      -webkit-text-stroke: 1.5px #9f6eed;
+    }
+    .text.filter-text {
+      mix-blend-mode: screen;
+      color: #9f6eed;
+    }
+
+    .images {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 100px 20px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .images img {
+      width: 250px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #9f6eed88;
+      transition: transform 0.3s ease;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .images img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #9f6eedaa;
+    }
+
+    .description {
+      text-align: center;
+      max-width: 700px;
+      margin: 80px auto;
+      font-size: 1.2rem;
+      color: #ccc;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/header-public :: headerPublicFragment"></div>
+
+<!-- Título normal, no fijo -->
+<div class="text outline-text">Levelviewd</div>
+<div class="text filter-text">Levelviewd</div>
+<div class="text">Levelviewd</div>
+
+<!-- Contenido -->
+<div id="content">
+  <section class="images" id="image-gallery"></section>
+
+  <section class="description">
+    <p>
+      Bienvenido a <strong>Levelviewd</strong>, tu comunidad para descubrir y compartir reseñas de videojuegos. Explora portadas, puntuaciones y opiniones para encontrar tu próximo juego favorito.
+    </p>
+  </section>
+</div>
+
+<!-- GSAP y animaciones -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Genera IDs aleatorios
+  function getRandomUniqueNumbers(count, min, max) {
+    const set = new Set();
+    while (set.size < count) {
+      const num = Math.floor(Math.random() * (max - min + 1)) + min;
+      set.add(num);
+    }
+    return Array.from(set);
+  }
+
+  window.onload = function () {
+    const imageContainer = document.getElementById("image-gallery");
+    const randomIds = getRandomUniqueNumbers(20, 1, 40); // más imágenes para más scroll
+
+    randomIds.forEach((id, index) => {
+      const img = document.createElement("img");
+      img.src = `http://localhost:8080/img/games/${id}.png`;
+      img.alt = `Juego ${id}`;
+      img.setAttribute("data-speed", (0.4 + (index % 5) * 0.1).toFixed(2));
+      imageContainer.appendChild(img);
+    });
+
+    // GSAP animations
+    gsap.utils.toArray(".images img").forEach(img => {
+      const speed = parseFloat(img.getAttribute("data-speed")) || 1;
+      gsap.to(img, {
+        y: () => window.innerHeight * (speed - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: img,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    });
+
+    gsap.to(".description", {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      scrollTrigger: {
+        trigger: ".description",
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      }
+    });
+  };
+</script>
+
+</body>
+</html>

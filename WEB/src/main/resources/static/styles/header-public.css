@@ -1,0 +1,30 @@
+.header-public {
+    background-color: #2a2a40;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    user-select: none;
+}
+
+.header-public nav {
+    display: flex;
+    gap: 24px;
+}
+
+.header-public nav a {
+    color: #eaeaea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.header-public nav a:hover,
+.header-public nav a:focus {
+    color: #9f6eed;
+    text-decoration: underline;
+    cursor: pointer;
+}

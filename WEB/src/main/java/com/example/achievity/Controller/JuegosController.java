@@ -46,11 +46,20 @@ public class JuegosController {
     }
 
 
+    @GetMapping("/")
+    public String home(Model model) {
+        if (!sessionManager.estaLogeado()) {
+            return "landing";
+        }
+        model.addAttribute("juegos", juegoApiService.obtenerJuegosPopulares());
+        return "index";
+    }
+
 
     @GetMapping("/index")
     public String mostrarIndex(Model model) {
         if (!sessionManager.estaLogeado()) {
-            return "redirect:/login";
+            return "landing";
         }
         model.addAttribute("juegos", juegoApiService.obtenerJuegosPopulares());
         return "index";

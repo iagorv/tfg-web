@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #eaeaea;
+}
+
+.main-content p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+/* Botones login y registro */
+.btn-login, .btn-register {
+    display: inline-block;
+    padding: 10px 25px;
+    margin: 0 10px 30px 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* Botón login: morado sólido */
+.btn-login {
+    background-color: #9f6eed;
+    color: #eaeaea;
+    border-color: #9f6eed;
+}
+
+.btn-login:hover {
+    background-color: #b187f7;
+    border-color: #b187f7;
+    color: #fff;
+}
+
+/* Botón registro: transparente con borde morado */
+.btn-register {
+    background-color: transparent;
+    color: #9f6eed;
+    border-color: #9f6eed;
+}
+
+.btn-register:hover {
+    background-color: #9f6eed;
+    color: #eaeaea;
+}
+
+/* Título sección juegos populares */
+.main-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #eaeaea;
+}
+
+/* Lista juegos */
+.games-list ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.game-item {
+    background-color: #2a2a40;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: box-shadow 0.2s ease, border 0.2s ease, transform 0.2s ease;
+}
+
+.game-item:hover {
+    border: 2px solid #9f6eed;
+    box-shadow: 0 0 10px #9f6eed;
+    transform: translateY(-4px);
+}
+
+.game-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.game-name {
+    font-size: 14px;
+    color: #eaeaea;
+    margin-top: 10px;
+}
+
+.hidden-game {
+    display: none;
+}
+
+/* Ver más */
+.ver-mas-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.ver-mas {
+    color: #9f6eed;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.ver-mas:hover {
+    color: #b187f7;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .games-list ul {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .games-list ul {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .games-list ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+    .games-list ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* FOOTER */
+.main-footer {
+    height: 40px;
+    background-color: #2a2a40;
+}
