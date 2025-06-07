@@ -290,3 +290,39 @@
             text-align: center;
         }
     }
+    .modal {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000;
+    }
+
+    .modal.hidden { display: none; }
+
+    .modal-content {
+        background: #2a2a40;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        color: #eaeaea;
+    }
+
+    .modal-content textarea {
+        width: 100%;
+        resize: none;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 6px;
+        background-color: #1e1e2f;
+        border: 1px solid #444;
+        color: #fff;
+    }
+
+    .cerrar {
+        float: right;
+        font-size: 20px;
+        cursor: pointer;
+    }

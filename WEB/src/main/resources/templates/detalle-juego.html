@@ -86,6 +86,7 @@
                             <button type="submit" class="btn btn-secundario">➕ Añadir a deseados</button>
                         </form>
                     </div>
+                    <button class="btn" id="abrirBitacoraBtn">📝 Añadir bitácora</button>
 
 
                 </div>
@@ -119,14 +120,33 @@
 
     </main>
 
+    <div id="modalBitacora" class="modal hidden">
+        <div class="modal-content">
+            <span class="cerrar" id="cerrarModal">&times;</span>
+            <h3>Nueva bitácora</h3>
+            <textarea id="textoBitacora" rows="5" placeholder="Escribe tu avance..."></textarea>
+            <button id="guardarBitacoraBtn" class="btn">Guardar</button>
+        </div>
+    </div>
 
 
     <footer class="main-footer"></footer>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     </body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
+
+
+
+
+
         const idJuego = [[${juego.id}]];
+        const idUsuario =  [[${session.idUsuarioLogeado}]]
 
         fetch(`http://localhost:8080/api/review/juego/${idJuego}/distribucion`)
             .then(response => response.json())
@@ -181,8 +201,76 @@
                 console.error('Error al obtener la distribución de notas:', err);
                 document.getElementById('nota-media-texto').textContent = "⭐ No disponible";
             });
-        /*]]>*/
-    </script>
 
+        document.getElementById("abrirBitacoraBtn").addEventListener("click", () => {
+            document.getElementById("modalBitacora").classList.remove("hidden");
+        });
+
+        document.getElementById("cerrarModal").addEventListener("click", () => {
+            document.getElementById("modalBitacora").classList.add("hidden");
+        });
+        document.getElementById("guardarBitacoraBtn").addEventListener("click", () => {
+            const entradaTexto = document.getElementById("textoBitacora").value;
+
+            if (!entradaTexto.trim()) {
+                Toastify({
+                    text: "⚠️ La entrada no puede estar vacía.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#ff9800",
+                    stopOnFocus: true
+                }).showToast();
+                return;
+            }
+
+            const bitacoraData = {
+                usuarioId: idUsuario,
+                juegoId: idJuego,
+                entrada: entradaTexto
+            };
+
+            fetch("http://localhost:8080/api/bitacora/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(bitacoraData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text) });
+                    }
+                    return response.text();
+                })
+                .then(msg => {
+                    Toastify({
+                        text: "✅ Entrada añadida correctamente.",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#4caf50",
+                        stopOnFocus: true
+                    }).showToast();
+
+                    document.getElementById("modalBitacora").classList.add("hidden");
+                    document.getElementById("textoBitacora").value = "";
+                })
+                .catch(error => {
+                    console.error("Error al guardar la bitácora:", error);
+                    Toastify({
+                        text: "❌ Error al guardar la bitácora: " + error.message,
+                        duration: 4000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#f44336",
+                        stopOnFocus: true
+                    }).showToast();
+                });
+        });
+
+
+
+    </script>
 
     </html>
