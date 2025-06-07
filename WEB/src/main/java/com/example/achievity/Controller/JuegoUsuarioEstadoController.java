@@ -24,7 +24,7 @@ public class JuegoUsuarioEstadoController {
         Long usuarioId = sessionManager.getIdUsuarioLogeado();
 
         if (usuarioId == null) {
-            return "redirect:/login"; // Por si acaso
+            return "redirect:/index"; // Por si acaso
         }
 
         estadoJuegoService.guardarEstadoJuego(juegoId, usuarioId, estado);

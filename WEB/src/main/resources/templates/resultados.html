@@ -6,7 +6,7 @@
 </head>
 <body>
 <header th:replace="fragments/header :: headerFragment"></header>
-
+<div class="main-content">
 <div class="resultados">
     <h1>Resultados para "<span th:text="${query}"></span>"</h1>
 
@@ -43,6 +43,10 @@
 
 
 </div>
+
+
+</div>
+<div th:replace="fragments/footer :: footerFragment"></div>
 </body>
 
 </html>

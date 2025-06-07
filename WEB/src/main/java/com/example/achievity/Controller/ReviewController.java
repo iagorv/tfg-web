@@ -41,7 +41,7 @@ public class ReviewController {
         Long usuarioId = sessionManager.getIdUsuarioLogeado();
 
         if (usuarioId == null) {
-            return "redirect:/login";
+            return "redirect:/index";
         }
 
         reviewDTO.setUsuarioId(usuarioId);
@@ -67,7 +67,7 @@ public class ReviewController {
                                   Model model) {
 
         Long usuarioId = sessionManager.getIdUsuarioLogeado();
-        if (usuarioId == null) return "redirect:/login";
+        if (usuarioId == null) return "redirect:/index";
 
         model.addAttribute("usuario", Map.of("id", usuarioId));
         model.addAttribute("view", view);
@@ -101,7 +101,7 @@ public class ReviewController {
             Model model) {
 
         if (!sessionManager.estaLogeado()) {
-            return "redirect:/login";
+            return "redirect:/index";
         }
 
 

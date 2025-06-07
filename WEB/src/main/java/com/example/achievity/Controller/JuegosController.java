@@ -67,7 +67,7 @@ public class JuegosController {
     @GetMapping("/juegos/{idJuego}/review")
     public String mostrarFormularioReview(@PathVariable Long idJuego, Model model) {
         if (!sessionManager.estaLogeado()) {
-            return "redirect:/login";
+            return "redirect:/index";
         }
         var juegoNombre = juegoApiService.obtenerNombreJuegoPorId(idJuego);
 
@@ -82,7 +82,7 @@ public class JuegosController {
     @GetMapping("/juegos/{id}")
     public String detalleJuego(@PathVariable Long id, Model model) {
         if (!sessionManager.estaLogeado()) {
-            return "redirect:/login";
+            return "redirect:/index";
         }
 
         Long usuarioId = sessionManager.getIdUsuarioLogeado(); // <-- importante

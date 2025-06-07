@@ -8,7 +8,7 @@
     </head>
     <body>
     <div th:replace="fragments/header :: headerFragment"></div>
-
+    <div class="main-content">
     <main class="reviews-page-container">
         <section class="reviews-header">
             <h1>Mi Actividad</h1>
@@ -123,9 +123,9 @@
         <div id="toast"></div>
 
     </main>
+    </div>
 
-    <footer class="main-footer"></footer>
-
+    <div th:replace="fragments/footer :: footerFragment"></div>
 
 
 

@@ -2,31 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+<!-- Contenedor principal que permite al footer quedar abajo -->
+<div class="page-wrapper">
 
-    <title>Inicio</title>
-    <link rel="stylesheet" href="/styles/index.css">
-  </head>
-  <body>
   <div th:replace="fragments/header :: headerFragment"></div>
-
 
   <main class="main-content">
     <h2 class="welcome-message">¡Hola, <span th:text="${session.nombreUsuario}">Usuario</span>!</h2>
 
-
-      <h3 class="section-title">Juegos populares</h3>
-      <section class="games-list">
-        <ul id="gamesContainer">
-          <li th:each="juego, iterStat : ${juegos}"
-              class="game-item"
-              th:classappend="${iterStat.index >= 5} ? ' hidden-game' : ''">
-            <a th:href="@{/juegos/{id}(id=${juego.id})}">
-              <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
-                   alt="Imagen del juego" class="game-image"/>
-              <h3 class="game-name" th:text="${juego.nombre}"></h3>
-            </a>
-          </li>
-        </ul>
+    <h3 class="section-title">Juegos populares</h3>
+    <section class="games-list">
+      <ul id="gamesContainer">
+        <li th:each="juego, iterStat : ${juegos}"
+            class="game-item"
+            th:classappend="${iterStat.index >= 5} ? ' hidden-game' : ''">
+          <a th:href="@{/juegos/{id}(id=${juego.id})}">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
+                 alt="Imagen del juego" class="game-image"/>
+            <h3 class="game-name" th:text="${juego.nombre}"></h3>
+          </a>
+        </li>
+      </ul>
 
       <div class="ver-mas-container">
         <span id="showMoreBtn" class="ver-mas">Ver más</span>
@@ -34,12 +34,10 @@
     </section>
   </main>
 
-  <footer class="main-footer"></footer>
-
-  <script src="/js/index.js"></script>
-
+  <div th:replace="fragments/footer :: footerFragment"></div>
+</div>
 
 
-  </body>
-
-  </html>
+<script src="/js/index.js"></script>
+</body>
+</html>

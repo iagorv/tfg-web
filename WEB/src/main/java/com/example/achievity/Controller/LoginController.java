@@ -52,6 +52,6 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout() {
         sessionManager.logout();
-        return "redirect:/login";
+        return "redirect:/index";
     }
 }

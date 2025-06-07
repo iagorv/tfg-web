@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 500 - Error interno</title>
+    <link rel="stylesheet" href="/styles/error.css">
+</head>
+<body>
+<div class="page-wrapper">
+
+    <main class="main-content">
+        <div class="error-code">500</div>
+        <div class="error-message">Error del servidor</div>
+        <p class="error-description">Algo salió mal en nuestro lado. Estamos trabajando para solucionarlo.</p>
+        <a href="/" class="back-home">Volver al inicio</a>
+    </main>
+
+    <div th:replace="fragments/footer :: footerFragment"></div>
+
+</div>
+</body>
+</html>

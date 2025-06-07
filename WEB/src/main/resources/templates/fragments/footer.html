@@ -1,0 +1,15 @@
+<footer class="main-footer" th:fragment="footerFragment">
+  <link rel="stylesheet" href="/styles/footer.css">
+  <div class="footer-content">
+
+
+    <div class="social-icons">
+      <a href="https://twitter.com" target="_blank"><img src="/img/x.svg" alt="Twitter"></a>
+      <a href="https://bsky.app" target="_blank"><img src="/img/bluesky.svg" alt="Bluesky"></a>
+      <a href="https://instagram.com" target="_blank"><img src="/img/instagram.svg" alt="Instagram"></a>
+      <a href="https://tiktok.com" target="_blank"><img src="/img/tiktok.svg" alt="TikTok"></a>
+    </div>
+
+    <p class="footer-copy">&copy; [[${#dates.format(#dates.createNow(), 'yyyy')}]] Levelviewd</p>
+  </div>
+</footer>

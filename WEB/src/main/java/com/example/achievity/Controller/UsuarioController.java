@@ -35,7 +35,7 @@ public class UsuarioController {
     @GetMapping("/perfil")
     public String mostrarPerfil(Model model) {
         if (!sessionManager.estaLogeado()) {
-            return "redirect:/login";
+            return "redirect:/index";
         }
 
         Long userId = sessionManager.getIdUsuarioLogeado();
