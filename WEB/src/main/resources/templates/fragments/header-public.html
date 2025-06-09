@@ -3,5 +3,29 @@
     <a href="/" th:href="@{/}">Inicio</a>
     <a href="/login" th:href="@{/login}">Iniciar sesión</a>
     <a href="/registro" th:href="@{/registro}">Registrarse</a>
+
+    <div style="display:inline-block; margin-left:20px;">
+      <a href="#" id="lang-es" style="color:#eaeaea; margin-right:10px;">ES</a>
+      <a href="#" id="lang-en" style="color:#eaeaea;">EN</a>
+    </div>
+
+    <script>
+      function changeLang(lang) {
+        const url = new URL(window.location);
+        url.searchParams.set('lang', lang);
+        window.location.href = url.toString();
+      }
+
+      document.getElementById('lang-es').addEventListener('click', e => {
+        e.preventDefault();
+        changeLang('es');
+      });
+
+      document.getElementById('lang-en').addEventListener('click', e => {
+        e.preventDefault();
+        changeLang('en');
+      });
+    </script>
+
   </nav>
 </header>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reseñas de Juegos</title>
+  <link rel="stylesheet" href="/styles/mis-reviews.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<main class="reviews-page-container">
+  <section class="reviews-header">
+    <h1>Reseñas</h1>
+    <p>Explora lo que otros jugadores opinan sobre los juegos</p>
+  </section>
+
+  <section class="reviews-list" th:if="${reviews != null and !reviews.isEmpty()}">
+    <article th:each="review : ${reviews}" class="review-card">
+      <div class="game-cover">
+        <img th:src="@{'http://localhost:8080/img/games/' + ${review.juegoId} + '.png'}" alt="Portada del juego">
+      </div>
+      <div class="review-info">
+        <div class="review-header">
+          <a th:href="@{/juegos/{id}(id=${review.juegoId})}" class="review-game-title" th:text="${review.tituloJuego}">Nombre del juego</a>
+          <span class="review-score" th:text="${review.nota} + '/10'">8/10</span>
+        </div>
+        <p class="review-texto" th:text="${review.reseña}">Contenido de la reseña...</p>
+        <p class="review-fecha" th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">01/01/2024</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="paginacion" th:if="${totalPaginas > 1}">
+    <div class="pagination-buttons">
+      <a th:if="${paginaActual > 0}"
+         th:href="@{'/reviews'(page=${paginaActual - 1}, size=${size})}">Anterior</a>
+      <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+                <a th:href="@{'/reviews'(page=${i}, size=${size})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
+            </span>
+      <a th:if="${paginaActual + 1 < totalPaginas}"
+         th:href="@{'/reviews'(page=${paginaActual + 1}, size=${size})}">Siguiente</a>
+    </div>
+  </div>
+
+  <div class="no-reviews" th:if="${reviews == null or reviews.isEmpty()}">
+    <p>Aún no hay reseñas disponibles.</p>
+  </div>
+</main>
+
+<div th:replace="fragments/footer :: footerFragment"></div>
+</body>
+</html>

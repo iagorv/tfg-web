@@ -338,6 +338,21 @@
     .btn-baja-cuenta:hover {
         background: #c9302c;
     }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-content {
+        flex: 1;
+    }
 
 
 

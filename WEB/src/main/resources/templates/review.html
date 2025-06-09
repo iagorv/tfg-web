@@ -31,8 +31,9 @@
          class="portada"
          th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
          alt="Portada del juego"
-         th:classappend="${session.esPremium} ? ' clickable' : ''"
-         th:attr="${session.esPremium} ? 'style=cursor:pointer;' : ''" />
+         th:classappend="${session.esPremium != null and session.esPremium} ? ' clickable' : ''"
+         th:style="${session.esPremium != null and session.esPremium} ? 'cursor:pointer;' : null" />
+
 
 
     <h2 th:text="${esEdicion} ? 'Editar reseña de: ' + ${juego.nombre} : 'Reseñar: ' + ${juego.nombre}">Título</h2>
@@ -93,8 +94,10 @@
   const cerrar = document.getElementById("cerrarModal");
   const contenedor = document.getElementById("portadasOpciones");
 
-
+  const esPremium = [[${session.esPremium}]];
+  console.log("esPremium:", esPremium);
   if (esPremium) {
+    console.log("Agregando listener de click a portada");
     portadaImg.addEventListener("click", () => {
       fetch(`http://localhost:8080/api/juegos/games/${juegoId}/portadas`)
               .then(res => res.json())
@@ -130,7 +133,7 @@
   const reviewTextarea = document.getElementById('review-text');
   const charWarning = document.getElementById('char-warning');
   const form = document.querySelector('form');
-  const esPremium = [[${session.esPremium}]];
+
   const maxChars = esPremium ? 800 : 300;
 
   reviewTextarea.addEventListener('input', () => {

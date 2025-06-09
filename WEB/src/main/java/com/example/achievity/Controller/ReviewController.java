@@ -118,6 +118,21 @@ public class ReviewController {
         return "review"; // Reutiliza el HTML existente
     }
 
+    @GetMapping("/reviews")
+    public String verReviewsPublicas(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "6") int size,
+                                     Model model) {
+
+        Page<ReviewDTO> reviewsPage = reviewService.obtenerTodasLasReviews(page, size);
+
+        model.addAttribute("reviews", reviewsPage.getContent());
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", reviewsPage.getTotalPages());
+        model.addAttribute("size", size);
+
+        return "reviews";
+    }
+
 
 
 

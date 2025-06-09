@@ -68,6 +68,21 @@ public class ReviewService {
     }
 
 
+    public Page<ReviewDTO> obtenerTodasLasReviews(int page, int size) {
+        ParameterizedTypeReference<RestResponsePage<ReviewDTO>> responseType =
+                new ParameterizedTypeReference<>() {};
+
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/review/todas/paginadas")
+                        .queryParam("page", page)
+                        .queryParam("size", size)
+                        .build())
+                .retrieve()
+                .bodyToMono(responseType)
+                .block();
+    }
+
 
 
 
