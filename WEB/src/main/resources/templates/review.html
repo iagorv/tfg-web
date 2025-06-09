@@ -27,7 +27,10 @@
 <div class="review-wrapper">
 <div class="review-card">
   <div class="review-header">
-    <img class="portada" th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego" />
+    <img id="portadaImagen" class="portada" style="cursor: pointer;"
+         th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
+         alt="Portada del juego" />
+
     <h2 th:text="${esEdicion} ? 'Editar reseña de: ' + ${juego.nombre} : 'Reseñar: ' + ${juego.nombre}">Título</h2>
 
 
@@ -70,8 +73,52 @@
 
   </form>
 </div>
+
+  <div id="portadaModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="cerrarModal" style="cursor: pointer;">&times;</span>
+      <h3>Selecciona una portada</h3>
+      <div id="portadasOpciones" class="portadas-grid"></div>
+    </div>
+  </div>
+
 </div>
+<script>
+  const portadaImg = document.getElementById("portadaImagen");
+  const modal = document.getElementById("portadaModal");
+  const cerrar = document.getElementById("cerrarModal");
+  const contenedor = document.getElementById("portadasOpciones");
+
+
+  portadaImg.addEventListener("click", () => {
+    fetch(`http://localhost:8080/api/juegos/games/${juegoId}/portadas`)
+            .then(res => res.json())
+            .then(data => {
+              contenedor.innerHTML = '';
+              data.forEach(url => {
+                const img = document.createElement("img");
+                img.src = url;
+                img.addEventListener("click", () => {
+                  portadaImg.src = url;
+                  modal.style.display = "none";
+                });
+                contenedor.appendChild(img);
+              });
+              modal.style.display = "flex";
+            });
+  });
+
+  cerrar.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+</script>
+
 <script src="/js/review.js" type="module"></script>
+
 <script>
   const reviewTextarea = document.getElementById('review-text');
   const charWarning = document.getElementById('char-warning');

@@ -183,7 +183,79 @@ body::before {
     border-radius: 5px;
     padding: 8px;
     color: #eaeaea;
+
     font-size: 14px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #2a2a40;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    color: #eaeaea;
+    position: relative;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #9f6eed;
+    text-align: center;
+}
+
+#cerrarModal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+#cerrarModal:hover {
+    color: #fff;
+}
+
+.portadas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    justify-items: center;
+}
+
+.portadas-grid img {
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.portadas-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #9f6eed;
 }
 
 
