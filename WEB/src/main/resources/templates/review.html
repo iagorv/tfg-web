@@ -27,9 +27,13 @@
 <div class="review-wrapper">
 <div class="review-card">
   <div class="review-header">
-    <img id="portadaImagen" class="portada" style="cursor: pointer;"
+    <img id="portadaImagen"
+         class="portada"
          th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}"
-         alt="Portada del juego" />
+         alt="Portada del juego"
+         th:classappend="${session.esPremium} ? ' clickable' : ''"
+         th:attr="${session.esPremium} ? 'style=cursor:pointer;' : ''" />
+
 
     <h2 th:text="${esEdicion} ? 'Editar reseña de: ' + ${juego.nombre} : 'Reseñar: ' + ${juego.nombre}">Título</h2>
 
@@ -90,23 +94,26 @@
   const contenedor = document.getElementById("portadasOpciones");
 
 
-  portadaImg.addEventListener("click", () => {
-    fetch(`http://localhost:8080/api/juegos/games/${juegoId}/portadas`)
-            .then(res => res.json())
-            .then(data => {
-              contenedor.innerHTML = '';
-              data.forEach(url => {
-                const img = document.createElement("img");
-                img.src = url;
-                img.addEventListener("click", () => {
-                  portadaImg.src = url;
-                  modal.style.display = "none";
+  if (esPremium) {
+    portadaImg.addEventListener("click", () => {
+      fetch(`http://localhost:8080/api/juegos/games/${juegoId}/portadas`)
+              .then(res => res.json())
+              .then(data => {
+                contenedor.innerHTML = '';
+                data.forEach(url => {
+                  const img = document.createElement("img");
+                  img.src = url;
+                  img.addEventListener("click", () => {
+                    portadaImg.src = url;
+                    modal.style.display = "none";
+                  });
+                  contenedor.appendChild(img);
                 });
-                contenedor.appendChild(img);
+                modal.style.display = "flex";
               });
-              modal.style.display = "flex";
-            });
-  });
+    });
+  }
+
 
   cerrar.addEventListener("click", () => {
     modal.style.display = "none";
