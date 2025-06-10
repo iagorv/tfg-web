@@ -5,12 +5,18 @@
   <head>
     <link rel="stylesheet" href="/styles/header.css">
     <script src="/js/header.js"></script>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
   </head>
   <div class="logo">
-    <a href="/index"><img src="/img/logo.png" alt="Logo"></a>
+    <a href="/index"><img src="/img/favicon.png" alt="Logo"></a>
   </div>
 
   <div class="header-right">
+    <div class="language-selector">
+      <a href="#" id="lang-es">ES</a>
+      <a href="#" id="lang-en">EN</a>
+    </div>
+
     <a href="/juegos" class="actividad-link" th:text="#{header.games}">Juegos</a>
     <a href="/mis-reviews" class="actividad-link" th:text="#{header.activity}">Actividad</a>
     <a href="/reviews" class="actividad-link" th:text="#{header.reviews}">Críticas</a>
@@ -28,7 +34,22 @@
     </div>
   </div>
 </header>
+<script>
+  function changeLang(lang) {
+    const url = new URL(window.location);
+    url.searchParams.set('lang', lang);
+    window.location.href = url.toString();
+  }
+
+  document.getElementById('lang-es').addEventListener('click', e => {
+    e.preventDefault();
+    changeLang('es');
+  });
+
+  document.getElementById('lang-en').addEventListener('click', e => {
+    e.preventDefault();
+    changeLang('en');
+  });
+</script>
 </body>
 </html>
-
-

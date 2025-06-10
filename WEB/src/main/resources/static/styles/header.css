@@ -1,5 +1,5 @@
-
-/* HEADER *//* HEADER GENERAL */
+/* HEADER */
+/* HEADER GENERAL */
 .main-header {
     background-color: #2a2a40;
     display: flex;
@@ -17,7 +17,7 @@
 .header-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 15px; /* Esto te ayuda a espaciar los elementos automáticamente */
 }
 
 /* ENLACE ACTIVIDAD */
@@ -25,7 +25,38 @@
     color: #eaeaea;
     text-decoration: none;
     font-size: 14px;
+    background: linear-gradient(90deg, #eaeaea, #eaeaea);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background 0.5s ease;
 }
+
+.actividad-link:hover {
+    background: linear-gradient(90deg, #9f6eed, #b187f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* SELECTOR DE IDIOMAS */
+.language-selector {
+    display: flex; /* Para que ES y EN estén en línea */
+    gap: 10px; /* Espacio entre los idiomas */
+    margin-right: 10px; /* Un poco de espacio a la derecha si es necesario */
+}
+
+.language-selector a {
+    color: #eaeaea;
+    text-decoration: none;
+    font-size: 14px;
+    /* Puedes añadir más estilos aquí, como un efecto al pasar el ratón */
+}
+
+.language-selector a:hover {
+    color: #9f6eed; /* Cambia el color al pasar el ratón */
+}
+
 
 /* SEARCH BAR */
 .search-bar {
@@ -37,8 +68,6 @@
     color: #eaeaea;
     font-size: 14px;
 }
-
-
 
 .nav-links a {
     margin: 0 10px;
@@ -100,22 +129,3 @@
 .user-menu.active .user-dropdown {
     display: block;
 }
-.actividad-link {
-    color: #eaeaea;
-    text-decoration: none;
-    font-size: 14px;
-    background: linear-gradient(90deg, #eaeaea, #eaeaea);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    transition: background 0.5s ease;
-}
-
-.actividad-link:hover {
-    background: linear-gradient(90deg, #9f6eed, #b187f7);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-
