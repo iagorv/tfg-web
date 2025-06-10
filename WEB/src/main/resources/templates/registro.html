@@ -6,48 +6,56 @@
     <title>Registro</title>
     <link rel="stylesheet" href="/styles/login.css">
 </head>
-<body>
-<div class="login-container">
-    <h2>Crear cuenta</h2>
+<body><div class="login-container">
+    <h2 th:text="#{registro.title}">Crear cuenta</h2>
     <form id="registro-form" th:action="@{/registro}" method="post">
 
-    <div class="input-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
-        </div>
         <div class="input-group">
-            <label for="email">Correo electrónico</label>
-            <input type="text" id="email" name="email" placeholder="Ingresa tu correo" required>
+            <label for="nombre" th:text="#{registro.name}">Nombre</label>
+            <input type="text" id="nombre" name="nombre" th:placeholder="#{registro.name.placeholder}" required>
         </div>
+
         <div class="input-group">
-            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <label for="email" th:text="#{registro.email}">Correo electrónico</label>
+            <input type="text" id="email" name="email" th:placeholder="#{registro.email.placeholder}" required>
+        </div>
+
+        <div class="input-group">
+            <label for="fechaNacimiento" th:text="#{registro.birthdate}">Fecha de nacimiento</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
         </div>
-        <p class="error-message" id="edad-error" style="color:#ff5c5c; display: none;">Debes tener al menos 16 años.</p>
+
+        <p class="error-message" id="edad-error" style="color:#ff5c5c; display: none;" th:text="#{registro.errorAge}">Debes tener al menos 16 años.</p>
+
         <div class="input-group">
-            <label for="register-password">Contraseña</label>
+            <label for="register-password" th:text="#{registro.password}">Contraseña</label>
             <div class="password-wrapper">
-                <input type="password" id="register-password" name="password" placeholder="Crea una contraseña" required>
-                <button type="button" class="toggle-password">Mostrar</button>
+                <input type="password" id="register-password" name="password" th:placeholder="#{registro.password.placeholder}" required>
+                <button type="button" class="toggle-password" th:text="#{registro.showPassword}">Mostrar</button>
             </div>
         </div>
-        <div class="input-group">
-            <label for="confirm-password">Repite la contraseña</label>
-            <div class="password-wrapper">
-                <input type="password" id="confirm-password" name="confirmPassword" placeholder="Repite la contraseña" required>
 
-                <button type="button" class="toggle-password">Mostrar</button>
+        <div class="input-group">
+            <label for="confirm-password" th:text="#{registro.confirmPassword}">Repite la contraseña</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirm-password" name="confirmPassword" th:placeholder="#{registro.confirmPassword.placeholder}" required>
+                <button type="button" class="toggle-password" th:text="#{registro.showPassword}">Mostrar</button>
             </div>
         </div>
-        <p class="error-message" id="password-error" style="color:#ff5c5c; display: none;">Las contraseñas no coinciden.</p>
 
-        <p class="error-message" th:text="${error}" ></p>
-        <button type="submit" class="login-btn">Registrarse</button>
+        <p class="error-message" id="password-error" style="color:#ff5c5c; display: none;" th:text="#{registro.errorPasswordMismatch}">Las contraseñas no coinciden.</p>
+
+        <p class="error-message" th:text="${error}"></p>
+
+        <button type="submit" class="login-btn" th:text="#{registro.button}">Registrarse</button>
     </form>
+
     <p style="margin-top: 15px; color: #eaeaea;">
-        ¿Ya tienes una cuenta? <a href="/login" style="color: #6fe381;">Inicia sesión aquí</a>
+        <span th:text="#{registro.haveAccount}">¿Ya tienes una cuenta?</span>
+        <a href="/login" style="color: #6fe381;" th:text="#{registro.loginHere}">Inicia sesión aquí</a>
     </p>
 </div>
+
 </body>
 <script src="/js/verPswd.js"></script>
 <script src="/js/registro.js"></script>
