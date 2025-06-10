@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body><header class="main-header" th:fragment="headerFragment">
+<body>
+<header class="main-header" th:fragment="headerFragment">
   <head>
     <link rel="stylesheet" href="/styles/header.css">
     <script src="/js/header.js"></script>
@@ -11,23 +11,24 @@
   </div>
 
   <div class="header-right">
-    <a href="/juegos" class="actividad-link">Juegos</a>
-    <a href="/mis-reviews" class="actividad-link">Actividad</a>
-    <a href="/reviews" class="actividad-link">Críticas</a>
+    <a href="/juegos" class="actividad-link" th:text="#{header.games}">Juegos</a>
+    <a href="/mis-reviews" class="actividad-link" th:text="#{header.activity}">Actividad</a>
+    <a href="/reviews" class="actividad-link" th:text="#{header.reviews}">Críticas</a>
     <form action="/resultados" method="get" class="search-form">
-      <input type="text" name="query" class="search-bar" placeholder="Buscar..." required>
+      <input type="text" name="query" class="search-bar" th:placeholder="#{header.search.placeholder}" required>
     </form>
-
 
     <div class="user-menu">
       <img th:src="@{'http://localhost:8080/img/user.png'}" alt="User Icon">
       <div class="user-dropdown">
-        <a href="/perfil">Perfil</a>
-        <a href="/mis-reviews">Actividad</a>
-        <a href="/logout">Logout</a>
+        <a href="/perfil" th:text="#{header.profile}">Perfil</a>
+        <a href="/mis-reviews" th:text="#{header.activity}">Actividad</a>
+        <a href="/logout" th:text="#{header.logout}">Logout</a>
       </div>
     </div>
   </div>
 </header>
+</body>
+</html>
 
 

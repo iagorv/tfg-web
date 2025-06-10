@@ -1,29 +1,26 @@
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Mi Actividad</title>
-        <link rel="stylesheet" href="/styles/mis-reviews.css">
-
-    </head>
-    <body>
-    <div th:replace="fragments/header :: headerFragment"></div>
-    <div class="main-content">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{miActividad.title}">Mi Actividad</title>
+    <link rel="stylesheet" href="/styles/mis-reviews.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+<div class="main-content">
     <main class="reviews-page-container">
         <section class="reviews-header">
-            <h1>Mi Actividad</h1>
-            <p>Revisa tus reseñas y entradas en la bitácora</p>
+            <h1 th:text="#{miActividad.heading}">Mi Actividad</h1>
+            <p th:text="#{miActividad.description}">Revisa tus reseñas y entradas en la bitácora</p>
         </section>
 
-        <!-- Tabs -->
         <div class="actividad-tabs">
             <a th:href="@{/mis-reviews(view='reseñas')}"
-               th:classappend="${view == 'reseñas'} ? 'active' : ''">Reseñas</a>
+               th:classappend="${view == 'reseñas'} ? 'active' : ''" th:text="#{miActividad.tab.reviews}">Reseñas</a>
             <a th:href="@{/mis-reviews(view='bitacora')}"
-               th:classappend="${view == 'bitacora'} ? 'active' : ''">Bitácora</a>
+               th:classappend="${view == 'bitacora'} ? 'active' : ''" th:text="#{miActividad.tab.logbook}">Bitácora</a>
         </div>
 
-        <!-- Vista de RESEÑAS -->
         <section th:if="${view == 'reseñas'}">
             <section class="reviews-list" th:if="${misReviews != null and !misReviews.isEmpty()}">
                 <article th:each="review : ${misReviews}" class="review-card">
@@ -40,17 +37,17 @@
                         <p class="review-fecha" th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">01/01/2024</p>
                         <div class="review-actions">
                             <a th:href="@{'/reviews/editar'
-                                + '?reviewId=' + ${review.id}
-                                + '&juegoId=' + ${review.juegoId}
-                                + '&juegoNombre=' + ${review.tituloJuego}
-                                + '&nota=' + ${review.nota}
-                                + '&reseña=' + ${review.reseña}}"
-                               class="edit-button">
+                            + '?reviewId=' + ${review.id}
+                            + '&juegoId=' + ${review.juegoId}
+                            + '&juegoNombre=' + ${review.tituloJuego}
+                            + '&nota=' + ${review.nota}
+                            + '&reseña=' + ${review.reseña}}"
+                               class="edit-button" th:text="#{miActividad.reviews.edit}">
                                 Editar
                             </a>
                             <button class="delete-button"
                                     th:attr="data-review-id=${review.id}"
-                                    onclick="eliminarReview(this)">
+                                    onclick="eliminarReview(this)" th:text="#{miActividad.reviews.delete}">
                                 Eliminar
                             </button>
                         </div>
@@ -61,19 +58,19 @@
             <div class="paginacion" th:if="${totalPaginas > 1}">
                 <div class="pagination-buttons">
                     <a th:if="${paginaActual > 0}"
-                       th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='reseñas')}">Anterior</a>
+                       th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='reseñas')}" th:text="#{miActividad.pagination.previous}">Anterior</a>
                     <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
-                        <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='reseñas')}"
-                           th:text="${i + 1}"
-                           th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
-                    </span>
+                    <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='reseñas')}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
+                </span>
                     <a th:if="${paginaActual + 1 < totalPaginas}"
-                       th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='reseñas')}">Siguiente</a>
+                       th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='reseñas')}" th:text="#{miActividad.pagination.next}">Siguiente</a>
                 </div>
             </div>
 
             <div class="no-reviews" th:if="${misReviews == null or misReviews.isEmpty()}">
-                <p>No has escrito ninguna reseña todavía.</p>
+                <p th:text="#{miActividad.reviews.noReviews}">No has escrito ninguna reseña todavía.</p>
             </div>
         </section>
 
@@ -93,7 +90,7 @@
                         <div class="review-actions">
                             <button class="delete-button"
                                     th:attr="data-bitacora-id=${bitacora.id}"
-                                    onclick="eliminarBitacora(this)">
+                                    onclick="eliminarBitacora(this)" th:text="#{miActividad.logbook.delete}">
                                 Eliminar
                             </button>
                         </div>
@@ -105,135 +102,131 @@
             <div class="paginacion" th:if="${totalPaginas > 1}">
                 <div class="pagination-buttons">
                     <a th:if="${paginaActual > 0}"
-                       th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='bitacora')}">Anterior</a>
+                       th:href="@{'/mis-reviews'(page=${paginaActual - 1}, size=${size}, view='bitacora')}" th:text="#{miActividad.pagination.previous}">Anterior</a>
                     <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
-                    <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='bitacora')}"
-                       th:text="${i + 1}"
-                       th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
-                </span>
+                <a th:href="@{'/mis-reviews'(page=${i}, size=${size}, view='bitacora')}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
+            </span>
                     <a th:if="${paginaActual + 1 < totalPaginas}"
-                       th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='bitacora')}">Siguiente</a>
+                       th:href="@{'/mis-reviews'(page=${paginaActual + 1}, size=${size}, view='bitacora')}" th:text="#{miActividad.pagination.next}">Siguiente</a>
                 </div>
             </div>
 
             <div class="no-reviews" th:if="${misBitacoras == null or misBitacoras.isEmpty()}">
-                <p>No hay entradas en la bitácora todavía.</p>
+                <p th:text="#{miActividad.logbook.noEntries}">No hay entradas en la bitácora todavía.</p>
             </div>
         </section>
         <div id="toast"></div>
 
     </main>
-    </div>
+</div>
 
-    <div th:replace="fragments/footer :: footerFragment"></div>
+<div th:replace="fragments/footer :: footerFragment"></div>
 
-
-
-    <div id="modal-confirm" class="modal">
-        <div class="modal-content">
-            <p id="modal-message">¿Estás seguro?</p>
-            <div class="modal-buttons">
-                <button id="modal-cancel" class="btn-cancel">Cancelar</button>
-                <button id="modal-confirm-btn" class="btn-confirm">Eliminar</button>
-            </div>
+<div id="modal-confirm" class="modal">
+    <div class="modal-content">
+        <p id="modal-message" th:text="#{miActividad.modal.confirm}">¿Estás seguro?</p>
+        <div class="modal-buttons">
+            <button id="modal-cancel" class="btn-cancel" th:text="#{miActividad.modal.cancel}">Cancelar</button>
+            <button id="modal-confirm-btn" class="btn-confirm" th:text="#{miActividad.modal.delete}">Eliminar</button>
         </div>
     </div>
-    <script th:inline="javascript">
-        const idUsuario = [[${usuario.id}]];
+</div>
+<script th:inline="javascript">
+    const idUsuario = [[${usuario.id}]];
 
-        // Referencias del modal
-        const modal = document.getElementById('modal-confirm');
-        const modalMessage = document.getElementById('modal-message');
-        const btnCancel = document.getElementById('modal-cancel');
-        const btnConfirm = document.getElementById('modal-confirm-btn');
+    // Referencias del modal
+    const modal = document.getElementById('modal-confirm');
+    const modalMessage = document.getElementById('modal-message');
+    const btnCancel = document.getElementById('modal-cancel');
+    const btnConfirm = document.getElementById('modal-confirm-btn');
 
-        let eliminarCallback = null;
+    let eliminarCallback = null;
 
-        function showModal(message, onConfirm) {
-            modalMessage.textContent = message;
-            modal.style.display = 'flex';
-            eliminarCallback = onConfirm;
-        }
+    function showModal(message, onConfirm) {
+        modalMessage.textContent = message;
+        modal.style.display = 'flex';
+        eliminarCallback = onConfirm;
+    }
 
-        btnCancel.onclick = () => {
+    btnCancel.onclick = () => {
+        modal.style.display = 'none';
+        eliminarCallback = null;
+    };
+
+    btnConfirm.onclick = () => {
+        if (eliminarCallback) eliminarCallback();
+        modal.style.display = 'none';
+        eliminarCallback = null;
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
             modal.style.display = 'none';
             eliminarCallback = null;
-        };
-
-        btnConfirm.onclick = () => {
-            if (eliminarCallback) eliminarCallback();
-            modal.style.display = 'none';
-            eliminarCallback = null;
-        };
-
-        window.onclick = (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                eliminarCallback = null;
-            }
-        };
-
-
-        function mostrarToast(mensaje) {
-            const toast = document.getElementById('toast');
-            toast.textContent = mensaje;
-            toast.className = 'show';
-            setTimeout(() => {
-                toast.className = toast.className.replace('show', '');
-            }, 3000);
         }
+    };
 
 
-        function eliminarReview(button) {
-            const reviewId = button.getAttribute('data-review-id');
+    function mostrarToast(mensaje) {
+        const toast = document.getElementById('toast');
+        toast.textContent = mensaje;
+        toast.className = 'show';
+        setTimeout(() => {
+            toast.className = toast.className.replace('show', '');
+        }, 3000);
+    }
 
-            showModal("¿Estás seguro de que deseas eliminar esta review?", () => {
-                fetch(`http://localhost:8080/api/review/${reviewId}?usuarioId=${idUsuario}`, {
-                    method: 'DELETE'
+
+    function eliminarReview(button) {
+        const reviewId = button.getAttribute('data-review-id');
+
+        showModal(/*[[#{miActividad.modal.deleteReviewConfirm}]]*/ "default message", () => {
+            fetch(`http://localhost:8080/api/review/${reviewId}?usuarioId=${idUsuario}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        mostrarToast(/*[[#{miActividad.toast.reviewDeleted}]]*/ "default message");
+                        setTimeout(() => location.reload(), 1500);
+                    } else if (response.status === 403) {
+                        mostrarToast(/*[[#{miActividad.toast.reviewNoPermission}]]*/ "default message");
+                    } else if (response.status === 404) {
+                        mostrarToast(/*[[#{miActividad.toast.reviewNotFound}]]*/ "default message");
+                    } else {
+                        mostrarToast(/*[[#{miActividad.toast.reviewDeleteError}]]*/ "default message");
+                    }
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            mostrarToast("Review eliminada exitosamente.");
-                            setTimeout(() => location.reload(), 1500);
-                        } else if (response.status === 403) {
-                            mostrarToast("No tienes permiso para eliminar esta review.");
-                        } else if (response.status === 404) {
-                            mostrarToast("La review no fue encontrada.");
-                        } else {
-                            mostrarToast("Error al eliminar la review.");
-                        }
-                    })
-                    .catch(() => {
-                        mostrarToast("Error de conexión al eliminar la review.");
-                    });
-            });
-        }
+                .catch(() => {
+                    mostrarToast(/*[[#{miActividad.toast.reviewConnectionError}]]*/ "default message");
+                });
+        });
+    }
 
-        function eliminarBitacora(button) {
-            const bitacoraId = button.getAttribute('data-bitacora-id');
+    function eliminarBitacora(button) {
+        const bitacoraId = button.getAttribute('data-bitacora-id');
 
-            showModal("¿Estás seguro de que deseas eliminar esta entrada de bitácora?", () => {
-                fetch(`http://localhost:8080/api/bitacora/${bitacoraId}`, {
-                    method: 'DELETE'
+        showModal(/*[[#{miActividad.modal.deleteLogbookConfirm}]]*/ "default message", () => {
+            fetch(`http://localhost:8080/api/bitacora/${bitacoraId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        mostrarToast(/*[[#{miActividad.toast.logbookDeleted}]]*/ "default message");
+                        setTimeout(() => location.reload(), 1500);
+                    } else if (response.status === 404) {
+                        mostrarToast(/*[[#{miActividad.toast.logbookNotFound}]]*/ "default message");
+                    } else {
+                        mostrarToast(/*[[#{miActividad.toast.logbookDeleteError}]]*/ "default message");
+                    }
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            mostrarToast("Entrada eliminada exitosamente.");
-                            setTimeout(() => location.reload(), 1500);
-                        } else if (response.status === 404) {
-                            mostrarToast("La entrada de bitácora no fue encontrada.");
-                        } else {
-                            mostrarToast("Error al eliminar la entrada.");
-                        }
-                    })
-                    .catch(() => {
-                        mostrarToast("Error de conexión al eliminar la entrada.");
-                    });
-            });
-        }
+                .catch(() => {
+                    mostrarToast(/*[[#{miActividad.toast.logbookConnectionError}]]*/ "default message");
+                });
+        });
+    }
+</script>
 
-
-    </script>
-
-    </body>
-    </html>
+</body>
+</html>

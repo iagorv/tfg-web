@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="${#locale.language}">
 <head>
   <meta charset="UTF-8">
-  <title>Reseñas de Juegos</title>
+  <title th:text="#{reviews.title}">Reseñas de Juegos</title>
   <link rel="stylesheet" href="/styles/mis-reviews.css">
 </head>
 <body>
@@ -10,8 +10,8 @@
 
 <main class="reviews-page-container">
   <section class="reviews-header">
-    <h1>Reseñas</h1>
-    <p>Explora lo que otros jugadores opinan sobre los juegos</p>
+    <h1 th:text="#{reviews.heading}">Reseñas</h1>
+    <p th:text="#{reviews.description}">Explora lo que otros jugadores opinan sobre los juegos</p>
   </section>
 
   <section class="reviews-list" th:if="${reviews != null and !reviews.isEmpty()}">
@@ -33,19 +33,19 @@
   <div class="paginacion" th:if="${totalPaginas > 1}">
     <div class="pagination-buttons">
       <a th:if="${paginaActual > 0}"
-         th:href="@{'/reviews'(page=${paginaActual - 1}, size=${size})}">Anterior</a>
+         th:href="@{'/reviews'(page=${paginaActual - 1}, size=${size})}" th:text="#{reviews.pagination.previous}">Anterior</a>
       <span th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
                 <a th:href="@{'/reviews'(page=${i}, size=${size})}"
                    th:text="${i + 1}"
                    th:classappend="${i == paginaActual} ? 'current-page' : ''"></a>
             </span>
       <a th:if="${paginaActual + 1 < totalPaginas}"
-         th:href="@{'/reviews'(page=${paginaActual + 1}, size=${size})}">Siguiente</a>
+         th:href="@{'/reviews'(page=${paginaActual + 1}, size=${size})}" th:text="#{reviews.pagination.next}">Siguiente</a>
     </div>
   </div>
 
   <div class="no-reviews" th:if="${reviews == null or reviews.isEmpty()}">
-    <p>Aún no hay reseñas disponibles.</p>
+    <p th:text="#{reviews.noReviews}">Aún no hay reseñas disponibles.</p>
   </div>
 </main>
 

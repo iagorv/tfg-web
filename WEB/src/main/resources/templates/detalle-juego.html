@@ -1,276 +1,251 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title th:text="${juego.nombre}">Detalle del Juego</title>
-        <link rel="stylesheet" href="/styles/detalle-juego.css">
-    </head>
-    <body>
-    <div th:replace="fragments/header :: headerFragment"></div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${juego.nombre}">Detalle del Juego</title>
+    <link rel="stylesheet" href="/styles/detalle-juego.css">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
 
-    <!-- Banner superior -->
-    <div class="banner" th:style="'background-image: url(http://localhost:8080/img/banners/' + ${juego.id} + '.png)'"></div>
-    <main class="detalle-container">
-        <aside class="juego-sidebar">
-            <div class="poster">
-                <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego">
-            </div>
+<div class="banner" th:style="'background-image: url(http://localhost:8080/img/banners/' + ${juego.id} + '.png)'"></div>
+<main class="detalle-container">
+    <aside class="juego-sidebar">
+        <div class="poster">
+            <img th:src="@{'http://localhost:8080/img/games/' + ${juego.id} + '.png'}" alt="Portada del juego">
+        </div>
 
+        <section class="rating-section">
+            <h2 th:text="#{detalleJuego.averageRating}">⭐ Nota media</h2>
+            <p id="nota-media-texto" th:text="#{detalleJuego.loading}">Cargando...</p>
+            <canvas id="graficoNotas" width="400" height="150"></canvas>
+        </section>
+    </aside>
 
-            <!-- Sección de nota media MOVIDA aquí -->
-            <section class="rating-section">
-                <h2>⭐ Nota media</h2>
-                <p id="nota-media-texto">Cargando...</p>
-                <canvas id="graficoNotas" width="400" height="150"></canvas>
-            </section>
-        </aside>
+    <section class="main-content">
+        <div class="info-juego">
+            <h1 class="titulo" th:text="${juego.nombre}">Nombre del juego</h1>
+            <p class="subtitulo" th:text="${juego.desarrollador}">Desarrollador</p>
+            <p><strong th:text="#{detalleJuego.year}">Año:</strong> <span th:text="${juego.añoSalida}"></span></p>
+            <p><strong th:text="#{detalleJuego.genres}">Géneros:</strong> <span th:text="${#strings.listJoin(juego.generos, ', ')}"></span></p>
+            <p><strong th:text="#{detalleJuego.platforms}">Plataformas:</strong> <span th:text="${#strings.listJoin(juego.plataformas, ', ')}"></span></p>
+            <p class="descripcion" th:text="${juego.descripcion}"></p>
+            <div class="acciones-juego">
+                <a th:href="@{'/juegos/' + ${juego.id} + '/review'}" class="btn" th:text="#{detalleJuego.addReview}">Añadir reseña</a>
+                <div th:switch="${estadoJuego}">
+                    <form th:case="null" method="post" th:action="@{/estado-juego/cambiar}">
+                        <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                        <input type="hidden" name="estado" value="deseado" />
+                        <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.addToWishlist}">➕ Añadir a deseados</button>
+                    </form>
 
-        <section class="main-content">
-            <!-- 👇 MUEVES AQUÍ LA INFO DEL JUEGO 👇 -->
-            <div class="info-juego">
-                <h1 class="titulo" th:text="${juego.nombre}">Nombre del juego</h1>
-                <p class="subtitulo" th:text="${juego.desarrollador}">Desarrollador</p>
-                <p><strong>Año:</strong> <span th:text="${juego.añoSalida}"></span></p>
-                <p><strong>Géneros:</strong> <span th:text="${#strings.listJoin(juego.generos, ', ')}"></span></p>
-                <p><strong>Plataformas:</strong> <span th:text="${#strings.listJoin(juego.plataformas, ', ')}"></span></p>
-                <p class="descripcion" th:text="${juego.descripcion}"></p>
-                <div class="acciones-juego">
-                    <a th:href="@{'/juegos/' + ${juego.id} + '/review'}" class="btn">Añadir reseña</a>
-                    <div th:switch="${estadoJuego}">
-                        <!-- Sin estado asignado -->
-                        <form th:case="null" method="post" th:action="@{/estado-juego/cambiar}">
-                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                            <input type="hidden" name="estado" value="deseado" />
-                            <button type="submit" class="btn btn-secundario">➕ Añadir a deseados</button>
-                        </form>
-
-                        <!-- Deseado: jugar o abandonar -->
-                        <div th:case="'deseado'">
-                            <form method="post" th:action="@{/estado-juego/cambiar}">
-                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                                <input type="hidden" name="estado" value="jugando" />
-                                <button type="submit" class="btn btn-secundario">▶️ Empezar a jugar</button>
-                            </form>
-                            <form method="post" th:action="@{/estado-juego/cambiar}">
-                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                                <input type="hidden" name="estado" value="abandonado" />
-                                <button type="submit" class="btn btn-secundario">❌ Abandonar</button>
-                            </form>
-                        </div>
-
-                        <!-- Jugando: terminar o abandonar -->
-                        <div th:case="'jugando'">
-                            <form method="post" th:action="@{/estado-juego/cambiar}">
-                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                                <input type="hidden" name="estado" value="terminado" />
-                                <button type="submit" class="btn btn-secundario">✅ Marcar como terminado</button>
-                            </form>
-                            <form method="post" th:action="@{/estado-juego/cambiar}">
-                                <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                                <input type="hidden" name="estado" value="abandonado" />
-                                <button type="submit" class="btn btn-secundario">❌ Abandonar</button>
-                            </form>
-                        </div>
-
-                        <!-- Terminado -->
-                        <form th:case="'terminado'" method="post" th:action="@{/estado-juego/cambiar}">
+                    <div th:case="'deseado'">
+                        <form method="post" th:action="@{/estado-juego/cambiar}">
                             <input type="hidden" name="juegoId" th:value="${juego.id}" />
                             <input type="hidden" name="estado" value="jugando" />
-                            <button type="submit" class="btn btn-secundario">🔁 Volver a jugar</button>
+                            <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.startPlaying}">▶️ Empezar a jugar</button>
                         </form>
-
-                        <!-- Abandonado -->
-                        <form th:case="'abandonado'" method="post" th:action="@{/estado-juego/cambiar}">
+                        <form method="post" th:action="@{/estado-juego/cambiar}">
                             <input type="hidden" name="juegoId" th:value="${juego.id}" />
-                            <input type="hidden" name="estado" value="deseado" />
-                            <button type="submit" class="btn btn-secundario">➕ Añadir a deseados</button>
+                            <input type="hidden" name="estado" value="abandonado" />
+                            <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.abandon}">❌ Abandonar</button>
                         </form>
                     </div>
-                    <button class="btn" id="abrirBitacoraBtn">📝 Añadir bitácora</button>
 
+                    <div th:case="'jugando'">
+                        <form method="post" th:action="@{/estado-juego/cambiar}">
+                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                            <input type="hidden" name="estado" value="terminado" />
+                            <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.markAsFinished}">✅ Marcar como terminado</button>
+                        </form>
+                        <form method="post" th:action="@{/estado-juego/cambiar}">
+                            <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                            <input type="hidden" name="estado" value="abandonado" />
+                            <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.abandon}">❌ Abandonar</button>
+                        </form>
+                    </div>
 
+                    <form th:case="'terminado'" method="post" th:action="@{/estado-juego/cambiar}">
+                        <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                        <input type="hidden" name="estado" value="jugando" />
+                        <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.playAgain}">🔁 Volver a jugar</button>
+                    </form>
+
+                    <form th:case="'abandonado'" method="post" th:action="@{/estado-juego/cambiar}">
+                        <input type="hidden" name="juegoId" th:value="${juego.id}" />
+                        <input type="hidden" name="estado" value="deseado" />
+                        <button type="submit" class="btn btn-secundario" th:text="#{detalleJuego.addToWishlist}">➕ Añadir a deseados</button>
+                    </form>
+                </div>
+                <button class="btn" id="abrirBitacoraBtn" th:text="#{detalleJuego.addLog}">📝 Añadir bitácora</button>
+            </div>
+        </div>
+        <section class="similares-section">
+            <h2 th:text="#{detalleJuego.similarGames}">🎮 Juegos similares</h2>
+            <div class="similares-grid">
+                <div th:each="sim : ${similares}" class="juego-card">
+                    <a th:href="@{'/juegos/' + ${sim.id}}">
+                        <img th:src="@{'http://localhost:8080/img/games//' + ${sim.id} + '.png'}" alt="Juego similar">
+                        <p th:text="${sim.nombre}">Nombre del juego</p>
+                    </a>
                 </div>
             </div>
-            <!-- SIMILARES primero -->
-            <section class="similares-section">
-                <h2>🎮 Juegos similares</h2>
-                <div class="similares-grid">
-                    <div th:each="sim : ${similares}" class="juego-card">
-                        <a th:href="@{'/juegos/' + ${sim.id}}">
-                            <img th:src="@{'http://localhost:8080/img/games//' + ${sim.id} + '.png'}" alt="Juego similar">
-                            <p th:text="${sim.nombre}">Nombre del juego</p>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- REVIEWS después -->
-            <section class="reviews-section" th:if="${reviews != null and !reviews.isEmpty()}">
-                <h2>🗣 Reseñas</h2>
-                <div th:each="review : ${reviews}" class="review">
-                    <p class="review-autor">
-                        <strong th:text="${review.usuarioNombre}">Usuario</strong> -
-                        <span th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">fecha</span>
-                    </p>
-                    <p class="review-texto" th:text="${review.reseña}">Texto de la reseña</p>
-                    <p class="review-nota">⭐ <span th:text="${review.nota}">8</span> / 10</p>
-                </div>
-            </section>
         </section>
 
-    </main>
+        <section class="reviews-section" th:if="${reviews != null and !reviews.isEmpty()}">
+            <h2 th:text="#{detalleJuego.reviews}">🗣 Reseñas</h2>
+            <div th:each="review : ${reviews}" class="review">
+                <p class="review-autor">
+                    <strong th:text="${review.usuarioNombre}">Usuario</strong> -
+                    <span th:text="${#temporals.format(review.fechaReview, 'dd/MM/yyyy')}">fecha</span>
+                </p>
+                <p class="review-texto" th:text="${review.reseña}">Texto de la reseña</p>
+                <p class="review-nota">⭐ <span th:text="${review.nota}">8</span> / 10</p>
+            </div>
+        </section>
+    </section>
 
-    <div id="modalBitacora" class="modal hidden">
-        <div class="modal-content">
-            <span class="cerrar" id="cerrarModal">&times;</span>
-            <h3>Nueva bitácora</h3>
-            <textarea id="textoBitacora" rows="5" placeholder="Escribe tu avance..."></textarea>
-            <button id="guardarBitacoraBtn" class="btn">Guardar</button>
-        </div>
+</main>
+
+<div id="modalBitacora" class="modal hidden">
+    <div class="modal-content">
+        <span class="cerrar" id="cerrarModal">&times;</span>
+        <h3 th:text="#{detalleJuego.modal.newLog}">Nueva bitácora</h3>
+        <textarea id="textoBitacora" rows="5" th:placeholder="#{detalleJuego.modal.placeholder}"></textarea>
+        <button id="guardarBitacoraBtn" class="btn" th:text="#{detalleJuego.modal.save}">Guardar</button>
     </div>
+</div>
 
+<div th:replace="fragments/footer :: footerFragment"></div>
 
-    <div th:replace="fragments/footer :: footerFragment"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+    const idJuego = [[${juego.id}]];
+    const idUsuario =  [[${session.idUsuarioLogeado}]]
 
+    fetch(`http://localhost:8080/api/review/juego/${idJuego}/distribucion`)
+        .then(response => response.json())
+        .then(data => {
+            const conteos = data.conteos;
+            const notaMedia = data.notaMedia;
 
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+            document.getElementById('nota-media-texto').textContent = `⭐ ${notaMedia.toFixed(1)} / 10`;
 
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script th:inline="javascript">
+            const ctx = document.getElementById('graficoNotas').getContext('2d');
 
-
-
-
-
-        const idJuego = [[${juego.id}]];
-        const idUsuario =  [[${session.idUsuarioLogeado}]]
-
-        fetch(`http://localhost:8080/api/review/juego/${idJuego}/distribucion`)
-            .then(response => response.json())
-            .then(data => {
-                const conteos = data.conteos;
-                const notaMedia = data.notaMedia;
-
-                document.getElementById('nota-media-texto').textContent = `⭐ ${notaMedia.toFixed(1)} / 10`;
-
-                const ctx = document.getElementById('graficoNotas').getContext('2d');
-
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: Array(10).fill(''),
-                        datasets: [{
-                            label: 'Notas',
-                            data: conteos,
-                            backgroundColor: '#9f6eed',
-                            hoverBackgroundColor: '#b187f7',
-                            borderRadius: 4,
-                            barPercentage: 0.95,  // Ajustado para mínima separación
-                            categoryPercentage: 1.0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: '#2a2a40',
-                                titleColor: '#fff',
-                                bodyColor: '#eaeaea',
-                                callbacks: {
-                                    label: (ctx) => `Notas entre ${ctx.dataIndex}–${ctx.dataIndex + 1}: ${ctx.raw}`
-                                }
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array(10).fill(''),
+                    datasets: [{
+                        label: 'Notas',
+                        data: conteos,
+                        backgroundColor: '#9f6eed',
+                        hoverBackgroundColor: '#b187f7',
+                        borderRadius: 4,
+                        barPercentage: 0.95,
+                        categoryPercentage: 1.0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#2a2a40',
+                            titleColor: '#fff',
+                            bodyColor: '#eaeaea',
+                            callbacks: {
+                                label: (ctx) => `Notas entre ${ctx.dataIndex}–${ctx.dataIndex + 1}: ${ctx.raw}`
                             }
-                        },
-                        scales: {
-                            x: { display: false },
-                            y: { display: false }
-                        },
-                        animation: {
-                            duration: 800,
-                            easing: 'easeOutCubic'
                         }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    },
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutCubic'
                     }
-                });
-
-            })
-            .catch(err => {
-                console.error('Error al obtener la distribución de notas:', err);
-                document.getElementById('nota-media-texto').textContent = "⭐ No disponible";
+                }
             });
 
-        document.getElementById("abrirBitacoraBtn").addEventListener("click", () => {
-            document.getElementById("modalBitacora").classList.remove("hidden");
+        })
+        .catch(err => {
+            console.error('Error al obtener la distribución de notas:', err);
+            document.getElementById('nota-media-texto').textContent = /*[[#{detalleJuego.toast.noRatingAvailable}]]*/ '⭐ No disponible';
         });
 
-        document.getElementById("cerrarModal").addEventListener("click", () => {
-            document.getElementById("modalBitacora").classList.add("hidden");
-        });
-        document.getElementById("guardarBitacoraBtn").addEventListener("click", () => {
-            const entradaTexto = document.getElementById("textoBitacora").value;
+    document.getElementById("abrirBitacoraBtn").addEventListener("click", () => {
+        document.getElementById("modalBitacora").classList.remove("hidden");
+    });
 
-            if (!entradaTexto.trim()) {
+    document.getElementById("cerrarModal").addEventListener("click", () => {
+        document.getElementById("modalBitacora").classList.add("hidden");
+    });
+    document.getElementById("guardarBitacoraBtn").addEventListener("click", () => {
+        const entradaTexto = document.getElementById("textoBitacora").value;
+
+        if (!entradaTexto.trim()) {
+            Toastify({
+                text: /*[[#{detalleJuego.toast.emptyLog}]]*/ "⚠️ La entrada no puede estar vacía.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#ff9800",
+                stopOnFocus: true
+            }).showToast();
+            return;
+        }
+
+        const bitacoraData = {
+            usuarioId: idUsuario,
+            juegoId: idJuego,
+            entrada: entradaTexto
+        };
+
+        fetch("http://localhost:8080/api/bitacora/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(bitacoraData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.text();
+            })
+            .then(msg => {
                 Toastify({
-                    text: "⚠️ La entrada no puede estar vacía.",
+                    text: /*[[#{detalleJuego.toast.logAdded}]]*/ "✅ Entrada añadida correctamente.",
                     duration: 3000,
                     gravity: "top",
                     position: "right",
-                    backgroundColor: "#ff9800",
+                    backgroundColor: "#4caf50",
                     stopOnFocus: true
                 }).showToast();
-                return;
-            }
 
-            const bitacoraData = {
-                usuarioId: idUsuario,
-                juegoId: idJuego,
-                entrada: entradaTexto
-            };
-
-            fetch("http://localhost:8080/api/bitacora/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(bitacoraData)
+                document.getElementById("modalBitacora").classList.add("hidden");
+                document.getElementById("textoBitacora").value = "";
             })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.text().then(text => { throw new Error(text) });
-                    }
-                    return response.text();
-                })
-                .then(msg => {
-                    Toastify({
-                        text: "✅ Entrada añadida correctamente.",
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#4caf50",
-                        stopOnFocus: true
-                    }).showToast();
-
-                    document.getElementById("modalBitacora").classList.add("hidden");
-                    document.getElementById("textoBitacora").value = "";
-                })
-                .catch(error => {
-                    console.error("Error al guardar la bitácora:", error);
-                    Toastify({
-                        text: "❌ Error al guardar la bitácora: " + error.message,
-                        duration: 4000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#f44336",
-                        stopOnFocus: true
-                    }).showToast();
-                });
-        });
-
-
-
-    </script>
-
-    </html>
+            .catch(error => {
+                console.error("Error al guardar la bitácora:", error);
+                Toastify({
+                    text: /*[[#{detalleJuego.toast.logError}]]*/ "❌ Error al guardar la bitácora: " + error.message,
+                    duration: 4000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f44336",
+                    stopOnFocus: true
+                }).showToast();
+            });
+    });
+</script>
+</html>

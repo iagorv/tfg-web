@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="${#locale.language}">
 <head>
   <meta charset="UTF-8">
-  <title>Inicio</title>
+  <title th:text="#{index.title}">Inicio</title>
   <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-<!-- Contenedor principal que permite al footer quedar abajo -->
 <div class="page-wrapper">
 
   <div th:replace="fragments/header :: headerFragment"></div>
 
   <main class="main-content">
-    <h2 class="welcome-message">¡Hola, <span th:text="${session.nombreUsuario}">Usuario</span>!</h2>
+    <h2 class="welcome-message" th:text="#{index.greeting(${session.nombreUsuario})}">
+      ¡Hola, Usuario!
+    </h2>
 
-    <h3 class="section-title">Juegos populares</h3>
+    <h3 class="section-title" th:text="#{index.popularGames}">Juegos populares</h3>
+
     <section class="games-list">
       <ul id="gamesContainer">
         <li th:each="juego, iterStat : ${juegos}"
@@ -29,14 +31,13 @@
       </ul>
 
       <div class="ver-mas-container">
-        <span id="showMoreBtn" class="ver-mas">Ver más</span>
+        <span id="showMoreBtn" class="ver-mas" th:text="#{index.seeMore}">Ver más</span>
       </div>
     </section>
   </main>
 
   <div th:replace="fragments/footer :: footerFragment"></div>
 </div>
-
 
 <script src="/js/index.js"></script>
 </body>
