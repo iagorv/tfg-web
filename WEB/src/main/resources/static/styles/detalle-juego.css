@@ -1,364 +1,326 @@
-    /* RESET Y BASE */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+/* RESET Y BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #1e1e2f;
-        color: #eaeaea;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-    .main-footer {
-        height: 40px;
-        background-color: #2a2a40;
-    }
+/* CONTENEDORES PRINCIPALES */
+.banner {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+    flex-shrink: 0;
+}
 
-    /* BANNER SUPERIOR */
-    .banner {
-        height: 300px;
-        background-size: cover;
-        background-position: center;
-        margin-bottom: 40px;
-    }
+.main-footer {
+    height: 40px;
+    background-color: #2a2a40;
+    flex-shrink: 0;
+}
 
-    /* CONTENEDOR GENERAL */
+.detalle-container {
+    display: flex; /* Mantiene las dos columnas */
+    gap: 40px;
+    /* Eliminamos flex-wrap aquí para evitar que main-content se "rompa" a una nueva línea por reseñas largas. */
+    max-width: 1200px; /* Ancho máximo del contenedor completo */
+    padding: 0 40px 40px;
+    margin: 0 auto;
+    flex-grow: 1;
+    align-items: flex-start; /* Alinea los ítems al inicio de la cruz (arriba) */
+}
+
+/* SIDEBAR IZQUIERDO */
+.juego-sidebar {
+    flex: 0 0 300px; /* Ancho fijo para el sidebar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.poster img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 8px;
+    background-color: #2a2a40;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* CONTENIDO PRINCIPAL (donde está la info del juego, reseñas, etc.) */
+.main-content {
+    flex: 1; /* Permite que ocupe el espacio disponible */
+    max-width: 650px; /* **NUEVO:** Define un ancho máximo para la columna de contenido principal */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-width: 0; /* Permite que el elemento se encoja por debajo de su tamaño de contenido */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde horizontalmente */
+}
+
+/* INFORMACIÓN DEL JUEGO */
+.info-juego {
+    background-color: #2a2a40;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%; /* Asegura que la info del juego ocupe el 100% de su contenedor (main-content) */
+}
+
+.titulo {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #9f6eed;
+}
+
+.subtitulo {
+    font-style: italic;
+    font-size: 16px;
+    color: #cccccc;
+    margin-bottom: 20px;
+}
+
+.info-juego p {
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.descripcion {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #cccccc;
+}
+
+/* BOTONES */
+.acciones-juego {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.acciones-juego form {
+    display: inline-block;
+}
+
+.btn {
+    background-color: #9f6eed;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #b187f7;
+}
+
+.btn-secundario {
+    background-color: #44445f;
+}
+
+.btn-secundario:hover {
+    background-color: #5c5c7a;
+}
+
+/* SECCIONES */
+.rating-section,
+.reviews-section,
+.similares-section {
+    background-color: #2a2a40;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; /* Ocupa todo el ancho del main-content */
+}
+
+.rating-section h2,
+.reviews-section h2,
+.similares-section h2 {
+    font-size: 18px;
+    color: #cccccc;
+    margin-bottom: 10px;
+}
+
+#graficoNotas {
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+/* RESEÑAS */
+.reviews-section {
+    margin: 0 auto;
+}
+
+.review {
+    background-color: #1e1e2f;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    width: 100%; /* Cada reseña ocupa el 100% del reviews-section */
+}
+
+.review-autor {
+    color: #9f6eed;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.review-texto {
+    font-size: 15px;
+    color: #ccc;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    /* word-break: break-all; */ /* Puedes descomentar si es necesario, pero break-word suele ser suficiente */
+}
+
+.review-nota {
+    margin-top: 8px;
+}
+
+/* SIMILARES */
+.similares-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.juego-card {
+    width: 120px;
+    text-align: center;
+    background-color: #1e1e2f;
+    border-radius: 6px;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.juego-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.juego-card img {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.juego-card p {
+    color: #9f6eed;
+    font-weight: bold;
+    text-shadow: 0 0 5px #9f6eed, 0 0 10px #9f6eed;
+    transition: color 0.3s ease;
+}
+
+.juego-card:hover p {
+    color: #b187f7;
+}
+
+.juego-card a {
+    text-decoration: none;
+}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: #2a2a40;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    color: #eaeaea;
+}
+
+.modal-content textarea {
+    width: 100%;
+    resize: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #1e1e2f;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.cerrar {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
     .detalle-container {
-        display: flex;
-        flex-direction: row;
-        gap: 40px;
-        max-width: 1200px;
-        padding: 0 40px 40px;
-        margin: 0 auto;
-        flex-wrap: wrap;
+        flex-direction: column; /* Apila las columnas en pantallas pequeñas */
+        padding: 0 20px 40px;
+        flex-wrap: wrap; /* Permite que el contenido se envuelva en el modo columna */
+        align-items: center; /* Centra el contenido cuando está en columna */
     }
 
-    /* SIDEBAR */
-    .juego-sidebar {
-        flex: 0 0 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* MAIN CONTENT */
+    .juego-sidebar,
     .main-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
+        width: 100%; /* Ocupa todo el ancho disponible en el modo columna */
+        max-width: none; /* Elimina el max-width fijo en pantallas pequeñas para que pueda ser 100% */
+        align-items: center; /* Centra el contenido en el sidebar en modo columna */
     }
 
-    /* POSTER */
+    .info-juego {
+        text-align: center;
+    }
+
+    .acciones-juego {
+        justify-content: center;
+    }
+
     .poster img {
-        width: 100%;
-        max-width: 250px;
-        border-radius: 8px;
-        background-color: #2a2a40;
-        padding: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        width: 80%;
     }
+}
 
-    /* INFO DEL JUEGO */
-    .info-juego {
-        width: 100%;
-        margin-top: 20px;
-        max-width: 600px;
-    }
-
-    .titulo {
-        font-size: 30px;
-        margin-bottom: 10px;
-        color: #9f6eed;
-    }
-
-    .subtitulo {
-        font-style: italic;
-        font-size: 16px;
-        color: #cccccc;
-        margin-bottom: 20px;
-    }
-
-    .info-juego p {
-        margin-bottom: 10px;
-        font-size: 15px;
-        line-height: 1.5;
-    }
-
-    .descripcion {
-        margin-top: 15px;
-        font-size: 16px;
-        color: #cccccc;
-    }
-
-    /* ACCIONES */
+@media (max-width: 600px) {
     .acciones-juego {
-        margin-top: 20px;
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-
-    .btn {
-        background-color: #9f6eed;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-        background-color: #b187f7;
-    }
-
-    .btn-secundario {
-        background-color: #44445f;
-    }
-
-    .btn-secundario:hover {
-        background-color: #5c5c7a;
-    }
-
-    /* TITULOS DE SECCION */
-    .rating-section h2,
-    .reviews-section h2,
-    .similares-section h2 {
-        font-size: 18px;
-        color: #cccccc;
-        margin-bottom: 10px;
-    }
-
-    /* SECCIONES */
-    .rating-section,
-    .reviews-section,
-    .similares-section {
-        background-color: #2a2a40;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    /* RATING */
-    .rating-section {
-        margin-top: 30px;
-        width: 100%;
-        text-align: center;
-    }
-
-    #graficoNotas {
-        margin-top: 10px;
-        max-width: 100%;
-    }
-
-    /* REVIEWS */
-    .review {
-        background-color: #1e1e2f;
-        padding: 15px;
-        border-radius: 6px;
-        margin-bottom: 15px;
-    }
-
-    .review-autor {
-        color: #9f6eed;
-        font-size: 14px;
-        margin-bottom: 5px;
-    }
-
-    .review-texto {
-        font-size: 15px;
-        color: #ccc;
-    }
-
-    .review-nota {
-        margin-top: 8px;
-    }
-
-    /* SIMILARES */
-    .similares-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .juego-card {
-        width: 120px;
-        text-align: center;
-        background-color: #1e1e2f;
-        border-radius: 6px;
-        padding: 10px;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .juego-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
-
-    .juego-card img {
-        width: 100%;
-        border-radius: 4px;
-        margin-bottom: 8px;
-    }
-
-    .juego-card p {
-        color: #9f6eed;
-        font-weight: bold;
-        text-decoration: none;
-        text-shadow: 0 0 5px #9f6eed, 0 0 10px #9f6eed;
-        transition: color 0.3s ease;
-    }
-
-    .juego-card:hover p {
-        color: #b187f7;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 800px) {
-        .detalle-container {
-            flex-direction: column;
-            padding: 0 20px 40px;
-        }
-
-        .juego-sidebar,
-        .main-content {
-            width: 100%;
-            align-items: center;
-        }
-
-        .info-juego {
-            text-align: center;
-        }
-
-        .acciones-juego {
-            justify-content: center;
-        }
-
-        .similares-grid {
-            justify-content: center;
-        }
-
-        .poster img {
-            width: 80%;
-        }
-    }
-    /* Elimina subrayado de links dentro de juego-card */
-    .juego-card a {
-        text-decoration: none;
-    }
-
-    /* La info del juego ahora se adapta a estar dentro del main-content */
-    .info-juego {
-        max-width: 100%;
-        margin-top: 0;
-        margin-bottom: 20px;
-        padding: 20px;
-        background-color: #2a2a40;
-        border-radius: 10px;
-    }
-    .acciones-juego {
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: center;
-        justify-content: flex-start;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .acciones-juego form {
-        display: inline-block;
-    }
-    @media (max-width: 600px) {
-        .acciones-juego {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .acciones-juego form {
-            width: 100%;
-        }
-
-        .acciones-juego .btn {
-            width: 100%;
-            text-align: center;
-        }
-    }
-    .modal {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex; justify-content: center; align-items: center;
-        z-index: 1000;
-    }
-
-    .modal.hidden { display: none; }
-
-    .modal-content {
-        background: #2a2a40;
-        padding: 20px;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 400px;
-        color: #eaeaea;
-    }
-
-    .modal-content textarea {
         width: 100%;
-        resize: none;
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 6px;
-        background-color: #1e1e2f;
-        border: 1px solid #444;
-        color: #fff;
     }
 
-    .cerrar {
-        float: right;
-        font-size: 20px;
-        cursor: pointer;
+    .acciones-juego .btn {
+        width: 100%;
+        text-align: center;
     }
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #1e1e2f;
-        color: #eaeaea;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-    }
-
-    .detalle-container {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: row;
-        gap: 40px;
-        max-width: 1200px;
-        padding: 0 40px 40px;
-        margin: 0 auto;
-        flex-wrap: wrap;
-    }
-
-    .banner {
-        height: 300px;
-        min-height: 300px;
-        background-size: cover;
-        background-position: center;
-        margin-bottom: 40px;
-        flex-shrink: 0;
-    }
-
-    .main-footer {
-        height: 40px;
-        background-color: #2a2a40;
-        flex-shrink: 0;
-    }
-
+}

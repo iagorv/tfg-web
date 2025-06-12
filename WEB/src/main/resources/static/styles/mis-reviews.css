@@ -290,3 +290,21 @@
     }
 
 
+    /* Estilo para los botones desactivados */
+    .disabled-button {
+        background-color: #555; /* Un color de fondo más oscuro o grisáceo */
+        color: #bbb; /* Color de texto más claro y atenuado */
+        cursor: not-allowed; /* Cambia el cursor para indicar que no es clicable */
+        opacity: 0.7; /* Ligeramente transparente para dar un efecto de "desactivado" */
+        pointer-events: none; /* Desactiva completamente los eventos de ratón */
+        border: none; /* Asegura que no haya un borde que lo haga parecer interactivo */
+        padding: 10px 15px; /* Mantén el padding para que tenga el mismo tamaño */
+        border-radius: 6px; /* Mantén el border-radius */
+        font-weight: bold; /* Mantén el fontweight */
+    }
+
+    /* Opcional: Si edit-button ya tiene estilos, asegúrate de que disabled-button los sobrescriba */
+    .edit-button.disabled-button:hover {
+        background-color: #555; /* Evita cualquier cambio de color al pasar el ratón */
+        color: #bbb;
+    }

@@ -64,7 +64,17 @@
     <div class="date-field">
       <label for="fechaCreacion">Fecha de la reseña</label>
       <input type="date" id="fechaCreacion" name="fechaCreacion" required>
-
+      <script>
+        // Configurar la fecha actual por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0'); // Meses son de 0-11
+          const day = String(today.getDate()).padStart(2, '0');
+          const formattedDate = `${year}-${month}-${day}`;
+          document.getElementById('fechaCreacion').value = formattedDate;
+        });
+      </script>
     </div>
 
     <textarea id="review-text" name="reseña" class="review-text" placeholder="Escribe tu reseña aquí..."></textarea>
