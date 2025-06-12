@@ -254,3 +254,24 @@ body {
     text-decoration: underline;
 }
 
+/* Esto asegura que el elemento HTML ocupe toda la altura de la ventana */
+html {
+    height: 100%;
+}
+
+/* Esto convierte el cuerpo de la página en un contenedor flexible */
+/* y hace que ocupe al menos el 100% de la altura de la ventana. */
+body {
+    display: flex; /* Permite usar flexbox */
+    flex-direction: column; /* Organiza los elementos hijos (header, main-content, footer) en una columna */
+    min-height: 100vh; /* Asegura que el body siempre tenga al menos la altura de la ventana visible */
+    margin: 0; /* Elimina los márgenes por defecto del body */
+    /* Tus otros estilos de body (font-family, background-color, color) se mantienen igual */
+}
+
+/* Esto hace que tu contenido principal (entre el header y el footer) */
+/* crezca y ocupe todo el espacio vertical disponible, empujando el footer hacia abajo. */
+.main-content {
+    flex: 1; /* ¡Esta es la regla clave! Permite que crezca */
+    /* Tus otros estilos de .main-content (padding, max-width, margin) se mantienen igual */
+}
