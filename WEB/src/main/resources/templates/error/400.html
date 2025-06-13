@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 404 - Página no encontrada</title>
+    <link rel="stylesheet" href="/styles/error.css">
+</head>
+<body>
+<div class="page-wrapper">
+
+    <main class="main-content">
+        <div class="error-code">400</div>
+        <div class="error-message">Bad Request</div>
+        <p class="error-description">La página que buscas no existe o ha sido movida.</p>
+        <a href="/" class="back-home">Volver al inicio</a>
+    </main>
+
+    <div th:replace="fragments/footer :: footerFragment"></div>
+</div>
+</body>
+</html>
